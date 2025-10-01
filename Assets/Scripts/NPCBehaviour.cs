@@ -3,13 +3,25 @@ using UnityEngine;
 public class NPCBehaviour : MonoBehaviour
 {
     public NPCAttributes Attributes => attributes;
-    public bool IsHighlighted => isHighlighted;
+    public bool IsTarget => isTarget;
 
     [SerializeField]
     NPCAttributes attributes;
 
     [SerializeField]
-    bool isHighlighted;
+    bool isTarget;
+
+    [SerializeField]
+    private GameObject eyeSprite;
+
+    [SerializeField]
+    private GameObject resourceCount;
+
+    private void Start()
+    {
+        isTarget = false;
+        eyeSprite.SetActive(isTarget);
+    }
 
     void Update()
     {
@@ -23,9 +35,10 @@ public class NPCBehaviour : MonoBehaviour
         transform.position = pos;
     }
 
-    public void SetHighlighted(bool value)
+    public void SetAsTarget(bool value)
     {
-        isHighlighted = value;
+        isTarget = value;
+        eyeSprite.SetActive(value);
     }
 
     public void SetAttribute(NPCAttributes attributes)
