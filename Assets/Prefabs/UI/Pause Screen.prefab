@@ -615,11 +615,13 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6576390578054038519, guid: 1e314aa194e501a408309032b637d51d, type: 3}
       propertyPath: m_Name
-      value: Back Button
+      value: Resume Button
       objectReference: {fileID: 0}
     - target: {fileID: 7268212607877807172, guid: 1e314aa194e501a408309032b637d51d, type: 3}
       propertyPath: m_text
-      value: Back
+      value: 'Resume
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 8694015917128005443, guid: 1e314aa194e501a408309032b637d51d, type: 3}
       propertyPath: m_Pivot.x

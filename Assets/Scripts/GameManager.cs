@@ -36,7 +36,8 @@ public class GameManager : MonoBehaviour
     private GameObject mainMenuUI;
     [SerializeField]
     private GameObject settingsUI;
-
+    [SerializeField]
+    private GameObject PauseButton;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -46,6 +47,10 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         DontDestroyUI();
 
+        pauseUI.SetActive(false);
+        settingsUI.SetActive(false);
+        PauseButton.SetActive(false);
+        mainMenuUI.SetActive(true);
 
         StartCoroutine(WaitForSceneFinishLoadingAndShowMainMenuAsync("InGameScene"));
     }
@@ -55,12 +60,14 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(pauseUI);
         DontDestroyOnLoad(mainMenuUI);
         DontDestroyOnLoad(settingsUI);
+        DontDestroyOnLoad(PauseButton);
     }
 
 
     public void StartGame()
     {
         Debug.Log("Start New Game or Wave from here");
+        SetToInGame();
     }
 
 
@@ -79,11 +86,49 @@ public class GameManager : MonoBehaviour
         state = GameState.In_Game;
         pauseUI.SetActive(false);
         mainMenuUI.SetActive(false);
+        PauseButton.SetActive(true);
     }
-
-    public void SetToPasued()
+    public void SetToMain()
+    {
+        state = GameState.MainMenu;
+        pauseUI.SetActive(false);
+        mainMenuUI.SetActive(true);
+    }
+    public void SetToPaused()
     {
         state = GameState.Paused;
+        pauseUI.SetActive(true);
+        PauseButton.SetActive(false);
+    }
+
+    public void SetToSettings() 
+    {
+        pauseUI.SetActive(false);
+        mainMenuUI.SetActive(false);
+        settingsUI.SetActive(true);
+    }
+
+    public void ReturnFromSettings() 
+    {
+        settingsUI.SetActive(false);
+
+        if (state == GameState.Paused) 
+        {
+            pauseUI.SetActive(true);
+        }
+        else if(state == GameState.MainMenu) 
+        {
+            mainMenuUI.SetActive(true);
+        }
+    }
+    public void VolumeSlider(float volume) 
+    {
+        AudioListener.volume = volume;
+    }
+
+    public void QuitGame() 
+    {
+        Application.Quit();
     }
 
     IEnumerator WaitForSceneFinishLoadingAsync(string sceneToLoad)
