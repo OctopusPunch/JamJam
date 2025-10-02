@@ -34,6 +34,10 @@ public class NPCBehaviour : MonoBehaviour
 
     void Update()
     {
+        if(GameManager.Instance.State != GameManager.GameState.In_Game)
+        {
+            return;
+        }
         MoveToLaneGrid(); 
         UpdateCurrentGrid();
     }
@@ -117,6 +121,10 @@ public class NPCBehaviour : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (GameManager.Instance.State != GameManager.GameState.In_Game)
+        {
+            return;
+        }
         if (currentGrid.GridState == LaneGrid.State.NonSelectable)
         {
             return;
@@ -132,11 +140,19 @@ public class NPCBehaviour : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        if (GameManager.Instance.State != GameManager.GameState.In_Game)
+        {
+            return;
+        }
         ShowReseource();
     }
 
     private void OnMouseExit()
     {
+        if (GameManager.Instance.State != GameManager.GameState.In_Game)
+        {
+            return;
+        }
         HideResource();
     }
 

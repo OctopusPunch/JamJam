@@ -55,8 +55,12 @@ public class TownResourceBehaviour : MonoBehaviour
     [SerializeField]
     private float fastResourceDrain = 1;
 
+    [SerializeField]
+    CanvasGroup canvas;
+
     void Awake()
     {
+        canvas.alpha = 0;
         _instance = this;
         InitialiseResources();
     }
@@ -80,7 +84,13 @@ public class TownResourceBehaviour : MonoBehaviour
 
     void Update()
     {
-        // ToDo Check Game is not paused or on main menu
+        if(GameManager.Instance.State != GameManager.GameState.In_Game)
+        {
+            canvas.alpha = 0;
+            return;
+        }
+
+        canvas.alpha = 1.0f;
 
         DrainFoodOverTime();
         DrainHappinessOverTime();
