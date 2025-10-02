@@ -34,7 +34,8 @@ public class NPCBehaviour : MonoBehaviour
 
     void Update()
     {
-        MoveToLaneGrid();
+        MoveToLaneGrid(); 
+        UpdateCurrentGrid();
     }
 
     private void MoveToLaneGrid()
@@ -69,7 +70,36 @@ public class NPCBehaviour : MonoBehaviour
 
     public void UpdateCurrentGrid()
     {
+        if(transform.position.x < targetGrid.transform.position.x - .5f)
+        {
+            return;
+        }
 
+        if(currentGrid != null && currentGrid.GridState == LaneGrid.State.Safe)
+        {
+            return;
+        }
+
+        currentGrid = targetGrid;
+
+        if(currentGrid.GridState != LaneGrid.State.Safe)
+        {
+            return;
+        }
+
+        // Increment Stat
+        if(attributes.waterResource >  0)
+        {
+            TownResourceBehaviour.Instance.AddWaterResource(attributes.waterResource);
+            
+        }
+        else if(attributes.foodResource > 0)
+        {
+            TownResourceBehaviour.Instance.AddFoodResource(attributes.foodResource);
+        }
+
+        // Hide/Remove NPC
+        gameObject.SetActive(false);
     }
 
     public void SetAsTarget(bool value)
