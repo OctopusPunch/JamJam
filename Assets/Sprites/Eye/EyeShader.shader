@@ -2,6 +2,7 @@ Shader "Custom/EyeShader"
 {
     Properties
     {
+        [Toggle(PIXELSNAP_ON)] _PixelSnap ("Pixel Snap", Float) = 1
         _EyeTex("Eye", 2D) = "white" {}
         _MaskTex("Mask", 2D) = "white" {}
         _OutlineTex("Outline", 2D) = "black" {}
@@ -56,7 +57,7 @@ Shader "Custom/EyeShader"
                 v2f o;
                 o.pos = UnityObjectToClipPos(v.vertex);
                 #if defined(PIXELSNAP_ON)
-                    o.pos = UnityPixelSnap(o.pos);
+                o.pos = UnityPixelSnap(o.pos);
                 #endif
                 o.uv = v.uv;
                 return o;

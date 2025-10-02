@@ -54,6 +54,7 @@ Material:
     - _MaskHard: 1
     - _MoveRange: 64
     - _OutlineMix: 0
+    - _PixelSnap: 0
     - _ShadeStrength: 0.427
     - _SnapSize: 64
     m_Colors:
