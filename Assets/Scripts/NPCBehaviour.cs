@@ -18,6 +18,10 @@ public class NPCBehaviour : MonoBehaviour
     [SerializeField]
     private TMP_Text resourceCountText;
 
+    [SerializeField]
+    private LaneGrid currentGrid;
+    [SerializeField]
+    private LaneGrid targetGrid;
 
 
     private void Start()
@@ -30,14 +34,42 @@ public class NPCBehaviour : MonoBehaviour
 
     void Update()
     {
-        Move();
+        MoveToLaneGrid();
     }
 
-    private void Move()
+    private void MoveToLaneGrid()
     {
         Vector3 pos = transform.position;
         pos.x += attributes.movementSpeed * Time.deltaTime;
+
+        if(pos.x < targetGrid.transform.position.x)
+        {
+            if (targetGrid.GridState == LaneGrid.State.Blocked || targetGrid.GridState == LaneGrid.State.Destroyed)
+            {
+                return;
+            }
+            transform.position = pos;
+            return;
+        }
+
+        if(targetGrid.NextGrid == null)
+        {
+            // Update Resources here and despawn NPC
+            return;
+        }
+
+        targetGrid = targetGrid.NextGrid;
+
+        if(targetGrid.GridState == LaneGrid.State.Blocked || targetGrid.GridState == LaneGrid.State.Destroyed)
+        {
+            return;
+        }
         transform.position = pos;
+    }
+
+    public void UpdateCurrentGrid()
+    {
+
     }
 
     public void SetAsTarget(bool value)
@@ -83,5 +115,10 @@ public class NPCBehaviour : MonoBehaviour
     void HideResource()
     {
         resourceCountText.gameObject.SetActive(false);
+    }
+
+    public void SetTargetGrid(LaneGrid laneGrid)
+    {
+        targetGrid = laneGrid;
     }
 }
