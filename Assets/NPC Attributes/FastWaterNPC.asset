@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1a2326c4b334e04f9c1dab6363b7f64, type: 3}
   m_Name: FastWaterNPC
   m_EditorClassIdentifier: Assembly-CSharp::NPCAttributes
-  movementSpeed: 0
+  movementSpeed: 0.5
   foodResource: 0
   waterResource: 3
