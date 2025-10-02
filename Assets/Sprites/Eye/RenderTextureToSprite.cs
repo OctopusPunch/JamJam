@@ -42,16 +42,29 @@ public sealed class RenderTextureToSprite : MonoBehaviour
         pending = false;
     }
 
+    static GraphicsFormat TargetFormat(GraphicsFormat src)
+    {
+        var wanted = QualitySettings.activeColorSpace == ColorSpace.Linear
+            ? GraphicsFormat.R8G8B8A8_UNorm
+            : GraphicsFormat.R8G8B8A8_SRGB;
+        return SystemInfo.IsFormatSupported(src, GraphicsFormatUsage.Sample) &&
+               SystemInfo.IsFormatSupported(src, GraphicsFormatUsage.Linear) &&
+               SystemInfo.IsFormatSupported(src, GraphicsFormatUsage.Render)
+            ? src
+            : wanted;
+    }
+
     void EnsureTex()
     {
         if (source == null || source.width <= 0 || source.height <= 0) return;
 
-        var fmt = GraphicsFormatUtility.GetGraphicsFormat(TextureFormat.RGBA32, true);
-        var needNew = tex == null || tex.width != source.width || tex.height != source.height;
+        var fmt = TargetFormat(source.graphicsFormat);
+        var needNew = tex == null || tex.width != source.width || tex.height != source.height || tex.graphicsFormat != fmt;
+
         if (needNew)
         {
             if (tex != null) DestroyImmediate(tex);
-            tex = new Texture2D(source.width, source.height, (GraphicsFormat)GraphicsFormatUtility.GetTextureFormat(fmt), TextureCreationFlags.None);
+            tex = new Texture2D(source.width, source.height, fmt, TextureCreationFlags.None);
             tex.filterMode = spriteFilterMode;
         }
 
@@ -59,14 +72,10 @@ public sealed class RenderTextureToSprite : MonoBehaviour
         {
             if (sprite != null) DestroyImmediate(sprite);
             sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), pixelsPerUnit);
-            if (targetRenderer) targetRenderer.sprite = sprite;
-            if (targetImage) targetImage.sprite = sprite;
         }
-        else
-        {
-            if (targetRenderer && targetRenderer.sprite != sprite) targetRenderer.sprite = sprite;
-            if (targetImage && targetImage.sprite != sprite) targetImage.sprite = sprite;
-        }
+
+        if (targetRenderer && targetRenderer.sprite != sprite) targetRenderer.sprite = sprite;
+        if (targetImage && targetImage.sprite != sprite) targetImage.sprite = sprite;
     }
 
     public void SyncOnce()
@@ -74,19 +83,20 @@ public sealed class RenderTextureToSprite : MonoBehaviour
         if (source == null) return;
         EnsureTex();
 
-#if UNITY_2019_3_OR_NEWER
         if (!SystemInfo.supportsAsyncGPUReadback) { SyncCPU(); return; }
         if (pending) { if (!request.done) return; ApplyRequest(); }
-        var rtFmt = source.graphicsFormat;
-        if (!SystemInfo.IsFormatSupported(rtFmt, FormatUsage.GetPixels)) { SyncCPU(); return; }
+
+        var srcFmt = TargetFormat(source.graphicsFormat);
+        if (!SystemInfo.IsFormatSupported(srcFmt, GraphicsFormatUsage.Sample))
+        {
+            SyncCPU();
+            return;
+        }
+
         pending = true;
         request = AsyncGPUReadback.Request(source, 0, OnReadback);
-#else
-        SyncCPU();
-#endif
     }
 
-#if UNITY_2019_3_OR_NEWER
     void OnReadback(AsyncGPUReadbackRequest req)
     {
         if (req.hasError) { pending = false; SyncCPU(); return; }
@@ -103,16 +113,29 @@ public sealed class RenderTextureToSprite : MonoBehaviour
         tex.Apply(false, false);
         pending = false;
     }
-#endif
 
     void SyncCPU()
     {
         if (tex == null || source == null) return;
+
+        var needsConvert = source.graphicsFormat != tex.graphicsFormat;
+        RenderTexture blitRT = null;
+
+        if (needsConvert)
+        {
+            blitRT = RenderTexture.GetTemporary(source.width, source.height, 0, tex.graphicsFormat);
+            Graphics.Blit(source, blitRT);
+        }
+
+        var src = needsConvert ? blitRT : source;
         var prev = RenderTexture.active;
-        RenderTexture.active = source;
-        var rect = new Rect(0, 0, source.width, source.height);
+        RenderTexture.active = src;
+
+        var rect = new Rect(0, 0, src.width, src.height);
         tex.ReadPixels(rect, 0, 0, false);
         tex.Apply(false, false);
+
         RenderTexture.active = prev;
+        if (blitRT) RenderTexture.ReleaseTemporary(blitRT);
     }
 }
