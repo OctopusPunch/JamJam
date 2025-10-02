@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1a2326c4b334e04f9c1dab6363b7f64, type: 3}
-  m_Name: NPCAttributes
-  m_EditorClassIdentifier: Assembly-CSharp::NPCAttributes
-  movementSpeed: 0.5
-  foodResource: 2
+  m_Script: {fileID: 11500000, guid: 89b9e050e7242b7438fe880201b65eee, type: 3}
+  m_Name: RainEvent
+  m_EditorClassIdentifier: Assembly-CSharp::RainEvent

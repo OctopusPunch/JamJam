@@ -1,10 +1,11 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[DefaultExecutionOrder(0)]
 public class GameManager : MonoBehaviour
 {
+    public WaveManager WaveManager;
 
     public GameObject PauseUI => pauseUI;
     public GameObject MainMenuUI => mainMenuUI;
@@ -20,7 +21,8 @@ public class GameManager : MonoBehaviour
         MainMenu,
         In_Game,
         Lose,
-        Win
+        Win,
+        ShowNewWave
     }
 
     public GameState State => state;
@@ -39,6 +41,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject PauseButton;
 
+
+    // in game stuffs
+    private float spawnSubWaveInSeconds;
+    private bool waveNumberUIShowing = false;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -50,10 +58,76 @@ public class GameManager : MonoBehaviour
         pauseUI.SetActive(false);
         settingsUI.SetActive(false);
         PauseButton.SetActive(false);
-        mainMenuUI.SetActive(true);
+        mainMenuUI.SetActive(false);
+        WaveManager.Initialise();
 
         StartCoroutine(WaitForSceneFinishLoadingAndShowMainMenuAsync("InGameScene"));
     }
+
+
+    public void Update()
+    {
+
+        if(waveNumberUIShowing)
+        {
+            return;
+        }
+
+        switch (state)
+        {
+            case GameState.Paused:
+                return;
+
+            case GameState.MainMenu:
+                return;
+
+            case GameState.In_Game:
+                InGameUpdate();
+                // Update
+                return;
+
+            case GameState.Lose:
+                // Show Lose Menu?
+                return;
+
+            case GameState.Win:
+                Debug.Log("All Waves done.");
+                return;
+            case GameState.ShowNewWave:
+                StartCoroutine(ShowWaveUI());
+                break;
+        }
+    }
+
+    void InGameUpdate()
+    {
+        if (WaveManager.beginNewWave)
+        {
+            if (WaveManager.currentWave >= WaveManager.Waves.Count)
+            {
+                state = GameState.Win;
+                return;
+            }
+            if (WaveManager.trackedNPCs.Count == 0)
+            {
+                state = GameState.ShowNewWave;
+                spawnSubWaveInSeconds = WaveManager.GetCurrentSubWaveSpawnTime();
+                WaveManager.beginNewWave = false;
+            }
+            return;
+        }
+        spawnSubWaveInSeconds -= Time.deltaTime;
+
+        if(spawnSubWaveInSeconds > 0)
+        {
+            return;
+        }
+
+        WaveManager.ReleaseNewSubwave();
+
+        spawnSubWaveInSeconds = WaveManager.GetCurrentSubWaveSpawnTime();
+    }
+
 
     void DontDestroyUI()
     {
@@ -66,7 +140,8 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        Debug.Log("Start New Game or Wave from here");
+        WaveManager.ResetWaves();
+        spawnSubWaveInSeconds = WaveManager.GetCurrentSubWaveSpawnTime();
         SetToInGame();
     }
 
@@ -131,20 +206,6 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
-    IEnumerator WaitForSceneFinishLoadingAsync(string sceneToLoad)
-    {
-        AsyncOperation sceneLoadOperation = SceneManager.LoadSceneAsync(sceneToLoad);
-        sceneLoadOperation.allowSceneActivation = false;
-        while (!sceneLoadOperation.isDone)
-        {
-            if (sceneLoadOperation.progress >= 0.9f)
-            {
-                yield return null;
-                sceneLoadOperation.allowSceneActivation = true;
-            }
-            yield return null;
-        }
-    }
     IEnumerator WaitForSceneFinishLoadingAndShowMainMenuAsync(string sceneToLoad)
     {
         AsyncOperation sceneLoadOperation = SceneManager.LoadSceneAsync(sceneToLoad);
@@ -161,4 +222,21 @@ public class GameManager : MonoBehaviour
         mainMenuUI.SetActive(true);
     }
 
+    IEnumerator ShowWaveUI()
+    {
+        Debug.Log("Show Wave Number");
+        waveNumberUIShowing = true;
+        state = GameState.In_Game;
+
+        float waitForSeconds = 3;
+
+
+        while(waitForSeconds > 0)
+        {
+            waitForSeconds -= Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        waveNumberUIShowing = false;
+    }
 }

@@ -3,6 +3,10 @@ using UnityEngine.UI;
 
 public class TownResourceBehaviour : MonoBehaviour
 {
+    public float CurretFoodValue => currentFoodValue;
+    public float CurrentHappinessValue => currentHappinessValue;
+    public float CurrentHungerValue => currentHungerValue;
+
 
     public static TownResourceBehaviour Instance => _instance;
     private static TownResourceBehaviour _instance;

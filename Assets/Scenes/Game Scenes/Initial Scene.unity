@@ -386,6 +386,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97f3196927355740bc91476c2e3eb2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  WaveManager:
+    Waves:
+    - subWaves:
+      - waveData:
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        spawnSubWaveInSeconds: 3
+      - waveData:
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        spawnSubWaveInSeconds: 6
+      - waveData:
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        spawnSubWaveInSeconds: 4
+      possibleEvents: []
+      eventChances: 0
+    - subWaves:
+      - waveData:
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        spawnSubWaveInSeconds: 3
+      - waveData:
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        spawnSubWaveInSeconds: 6
+      - waveData:
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        spawnSubWaveInSeconds: 4
+      possibleEvents: []
+      eventChances: 0
+    currentWave: 0
+    currentSubWave: 0
+    NpcPrefab: {fileID: 1275498152413282245, guid: 5f3df09b5cde8364b82443fdbedee187, type: 3}
+    beginNewWave: 0
   state: 1
   pauseUI: {fileID: 567322250}
   mainMenuUI: {fileID: 32758648185904471}
