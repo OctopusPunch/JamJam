@@ -82,8 +82,8 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -1940738496428130850, guid: a0a38eed13b5ad44e8f171aa2c214a3b, type: 3}
+  m_SortingOrder: 552
+  m_Sprite: {fileID: -3398479423036062016, guid: 4eb4e269b13543440b98432d7fd7f7ea, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -106,10 +106,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77a5d0aaae6d5e843a073f0ed606219b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCBehaviour
-  attributes: {fileID: 0}
+  attributes: {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
   isTarget: 0
   eyeSprite: {fileID: 7523941652299050669}
   resourceCountText: {fileID: 6141643821522432943}
+  currentGrid: {fileID: 0}
+  targetGrid: {fileID: 0}
 --- !u!61 &7539710013426921285
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -413,9 +415,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '+1 Water
-
-    +3 Food'
+  m_text: +3 Food
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
