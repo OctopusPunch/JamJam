@@ -20,16 +20,29 @@ public class TownResourceBehaviour : MonoBehaviour
 
 
     [Space(10)]
-    [Header("Water Values")]
+    [Header("Happiness Values")]
     [SerializeField]
-    private Image waterMeter;
+    private Image happinessMeter;
     [SerializeField]
-    private TMPro.TMP_Text waterValueDisplay;
+    private TMPro.TMP_Text happinessValueDisplay;
     [SerializeField]
-    private float maxWaterValue = 50;
-    private float currentWaterValue;
+    private float maxHappinessValue = 50;
+    private float currentHappinessValue;
 
-    private float waterDrainSpeed;
+    private float happinessDrainSpeed;
+
+
+    [Space(10)]
+    [Header("Monster Hunger Values")]
+    [SerializeField]
+    private Image hungerMeter;
+    [SerializeField]
+    private TMPro.TMP_Text hungerValueDisplay;
+    [SerializeField]
+    private float maxHungerValue = 50;
+    private float currentHungerValue;
+
+    private float hungerDrainSpeed;
 
     [Space(10)]
     [Header("Resource Drain Values")]
@@ -55,11 +68,14 @@ public class TownResourceBehaviour : MonoBehaviour
 
     public void InitialiseResources()
     {
-        currentWaterValue = maxWaterValue;
-        waterDrainSpeed = normalResourceDrain;
+        currentHappinessValue = maxHappinessValue;
+        happinessDrainSpeed = normalResourceDrain;
 
         currentFoodValue = maxFoodValue;
         foodDrainSpeed = normalResourceDrain;
+
+        currentHungerValue = maxHungerValue;
+        hungerDrainSpeed = normalResourceDrain;
     }
 
     void Update()
@@ -67,7 +83,8 @@ public class TownResourceBehaviour : MonoBehaviour
         // ToDo Check Game is not paused or on main menu
 
         DrainFoodOverTime();
-        DrainWaterOverTime();
+        DrainHappinessOverTime();
+        DrainHungerOverTime();
     }
 
 
@@ -82,48 +99,69 @@ public class TownResourceBehaviour : MonoBehaviour
         foodValueDisplay.text = currentFoodValue.ToString("0");
     }
 
-    void DrainWaterOverTime()
+    void DrainHappinessOverTime()
     {
-        currentWaterValue -= waterDrainSpeed * Time.deltaTime;
-        if (currentWaterValue < 0)
+        currentHappinessValue -= happinessDrainSpeed * Time.deltaTime;
+        if (currentHappinessValue < 0)
         {
-            currentWaterValue = 0;
+            currentHappinessValue = 0;
         }
-        waterMeter.fillAmount = currentWaterValue / maxWaterValue;
-        waterValueDisplay.text = currentWaterValue.ToString("0");
+        happinessMeter.fillAmount = currentHappinessValue / maxHappinessValue;
+        happinessValueDisplay.text = currentHappinessValue.ToString("0");
     }
 
-    public bool UseWaterResource(float value)
+    void DrainHungerOverTime()
     {
-        if (currentWaterValue <= 0)
+        currentHungerValue -= hungerDrainSpeed * Time.deltaTime;
+        if (currentHungerValue < 0)
+        {
+            currentHungerValue = 0;
+        }
+        hungerMeter.fillAmount = currentHungerValue / maxHungerValue;
+        hungerValueDisplay.text = currentHungerValue.ToString("0");
+    }
+
+    public bool UseHappinessResource(float value)
+    {
+        if (value <= 0)
         {
             return false;
         }
 
-        if (currentWaterValue < value)
+        if (currentHappinessValue <= 0)
         {
             return false;
         }
 
-        currentWaterValue -= value;
-        if (currentWaterValue < 0)
+        if (currentHappinessValue < value)
         {
-            currentWaterValue = 0;
+            return false;
+        }
+
+        currentHappinessValue -= value;
+        if (currentHappinessValue < 0)
+        {
+            currentHappinessValue = 0;
         }
         return true;
     }
 
-    public void AddWaterResource(float value)
+    public void AddHappinessResource(float value)
     {
-        currentWaterValue += value;
-        if(currentWaterValue > maxWaterValue)
+        currentHappinessValue += value;
+        if(currentHappinessValue > maxHappinessValue)
         {
-            currentWaterValue = maxWaterValue;
+            currentHappinessValue = maxHappinessValue;
         }
     }
 
     public bool UseFoodResource(float value)
     {
+        if (value <= 0)
+        {
+            return false;
+        }
+
         if (currentFoodValue <= 0)
         {
             return false;
@@ -148,6 +186,41 @@ public class TownResourceBehaviour : MonoBehaviour
         if (currentFoodValue > maxFoodValue)
         {
             currentFoodValue = maxFoodValue;
+        }
+    }
+
+
+    public bool UseHungerMeter(float value)
+    {
+        if(value <= 0)
+        {
+            return false;
+        }
+
+        if (currentHungerValue <= 0)
+        {
+            return false;
+        }
+
+        if (currentHungerValue < value)
+        {
+            return false;
+        }
+
+        currentHungerValue -= value;
+        if (currentHungerValue < 0)
+        {
+            currentHungerValue = 0;
+        }
+        return true;
+    }
+
+    public void AddToHungerMeter(float value)
+    {
+        currentHungerValue += value;
+        if (currentHungerValue > maxHungerValue)
+        {
+            currentHungerValue = maxHungerValue;
         }
     }
 }

@@ -82,23 +82,24 @@ public class NPCBehaviour : MonoBehaviour
 
         currentGrid = targetGrid;
 
-        if(currentGrid.GridState != LaneGrid.State.Safe)
+        if(currentGrid.GridState != LaneGrid.State.Safe && currentGrid.GridState != LaneGrid.State.NonSelectable)
         {
             return;
         }
 
-        // Increment Stat
-        if(attributes.waterResource >  0)
+        if(isTarget && currentGrid.GridState == LaneGrid.State.NonSelectable)
         {
-            TownResourceBehaviour.Instance.AddWaterResource(attributes.waterResource);
-            
-        }
-        else if(attributes.foodResource > 0)
-        {
-            TownResourceBehaviour.Instance.AddFoodResource(attributes.foodResource);
+            TownResourceBehaviour.Instance.AddToHungerMeter(attributes.foodResource + Random.Range(1, 3));
+            gameObject.SetActive(false);
+            return;
         }
 
-        // Hide/Remove NPC
+        if (currentGrid.GridState != LaneGrid.State.Safe)
+        {
+            return;
+        }
+        TownResourceBehaviour.Instance.AddFoodResource(attributes.foodResource);
+        
         gameObject.SetActive(false);
     }
 
@@ -116,6 +117,14 @@ public class NPCBehaviour : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (currentGrid.GridState == LaneGrid.State.NonSelectable)
+        {
+            return;
+        }
+        if (currentGrid.GridState == LaneGrid.State.Safe)
+        {
+            return;
+        }
         SetAsTarget(!IsTarget);
 
         // push to some eye watch list
@@ -133,8 +142,7 @@ public class NPCBehaviour : MonoBehaviour
 
     void SetResource()
     {
-        resourceCountText.text = "Water: " + attributes.waterResource.ToString();
-        resourceCountText.text += "<br>Food: " + attributes.foodResource.ToString();
+        resourceCountText.text = "Food: " + attributes.foodResource.ToString();
     }
 
     void ShowReseource()
