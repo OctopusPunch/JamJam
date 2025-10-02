@@ -11,7 +11,8 @@ public class LaneGrid : MonoBehaviour
         Passable,
         Blocked,
         Destroyed,
-        NonSelectable
+        NonSelectable,
+        Safe
     }
 
     [SerializeField]
