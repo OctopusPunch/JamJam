@@ -95,6 +95,7 @@ public class NPCBehaviour : MonoBehaviour
         {
             TownResourceBehaviour.Instance.AddToHungerMeter(attributes.foodResource + Random.Range(1, 3));
             gameObject.SetActive(false);
+            GameManager.Instance.WaveManager.RemoveIfTracked(this.gameObject);
             return;
         }
 
@@ -105,6 +106,7 @@ public class NPCBehaviour : MonoBehaviour
         TownResourceBehaviour.Instance.AddFoodResource(attributes.foodResource);
         
         gameObject.SetActive(false);
+        GameManager.Instance.WaveManager.RemoveIfTracked(this.gameObject);
     }
 
     public void SetAsTarget(bool value)
@@ -122,6 +124,10 @@ public class NPCBehaviour : MonoBehaviour
     private void OnMouseDown()
     {
         if (GameManager.Instance.State != GameManager.GameState.In_Game)
+        {
+            return;
+        }
+        if(currentGrid == null)
         {
             return;
         }
