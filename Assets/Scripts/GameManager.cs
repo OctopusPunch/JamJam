@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 [DefaultExecutionOrder(0)]
 public class GameManager : MonoBehaviour
 {
+    public bool GodHandActive => godHandActive;
     public WaveManager WaveManager;
 
     public GameObject PauseUI => pauseUI;
@@ -58,7 +59,11 @@ public class GameManager : MonoBehaviour
     // in game stuffs
     private float spawnSubWaveInSeconds;
     private bool waveNumberUIShowing = false;
+    private bool godHandActive;
 
+    private float timeScaleDelta = 0;
+    private const float deltaDuration = .35f;
+    private const float targetDeltaTime = .25f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -123,6 +128,8 @@ public class GameManager : MonoBehaviour
 
     void InGameUpdate()
     {
+        GodHandSlowDown();
+
         if (WaveManager.beginNewWave)
         {
             if (WaveManager.currentWave >= WaveManager.Waves.Count)
@@ -150,6 +157,31 @@ public class GameManager : MonoBehaviour
         spawnSubWaveInSeconds = WaveManager.GetCurrentSubWaveSpawnTime();
     }
 
+    void GodHandSlowDown()
+    {
+        if (godHandActive)
+        {
+            timeScaleDelta += Time.unscaledDeltaTime;
+            if (timeScaleDelta >= deltaDuration)
+            {
+                Time.timeScale = targetDeltaTime;
+                timeScaleDelta = deltaDuration;
+                return;
+            }
+            Time.timeScale = CubicEaseOut(timeScaleDelta / deltaDuration, 1, targetDeltaTime);
+            return;
+        }
+
+        timeScaleDelta -= Time.unscaledDeltaTime;
+        if (timeScaleDelta <= 0)
+        {
+            Time.timeScale = 1f;
+            timeScaleDelta = 0;
+            return;
+        }
+
+        Time.timeScale = CubicEaseOut(timeScaleDelta / deltaDuration, 1, targetDeltaTime);
+    }
 
     void DontDestroyUI()
     {
@@ -160,6 +192,11 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(waveUI);
         DontDestroyOnLoad(winUI);
         DontDestroyOnLoad(loseUI);
+    }
+
+    public void SetGodHandActive(bool value)
+    {
+        godHandActive = value;
     }
 
 
@@ -271,5 +308,11 @@ public class GameManager : MonoBehaviour
 
         waveNumberUIShowing = false;
         waveUI.SetActive(false);
+    }
+
+    public static float CubicEaseOut(float delta, float start, float end)
+    {
+        delta--;
+        return Mathf.LerpUnclamped(start, end, delta * delta * delta + 1);
     }
 }

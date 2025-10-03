@@ -3765,7 +3765,6 @@ GameObject:
   - component: {fileID: 2100857744}
   - component: {fileID: 2100857743}
   - component: {fileID: 2100857742}
-  - component: {fileID: 2100857741}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3773,18 +3772,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2100857741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2100857740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9019c93b950dd9b4a86dd39a7ad65618, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MouseController
 --- !u!114 &2100857742
 MonoBehaviour:
   m_ObjectHideFlags: 0

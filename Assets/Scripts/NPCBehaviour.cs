@@ -4,16 +4,13 @@ using UnityEngine;
 public class NPCBehaviour : MonoBehaviour
 {
     public NPCAttributes Attributes => attributes;
-    public bool IsTarget => isTarget;
+    public bool IsHeld => isHeld;
 
     [SerializeField]
     NPCAttributes attributes;
 
     [SerializeField]
-    bool isTarget;
-
-    [SerializeField]
-    private GameObject eyeSprite;
+    bool isHeld;
 
     [SerializeField]
     private TMP_Text resourceCountText;
@@ -23,18 +20,22 @@ public class NPCBehaviour : MonoBehaviour
     [SerializeField]
     private LaneGrid targetGrid;
 
+    private Vector3 previousPosition;
 
     private void Start()
     {
-        isTarget = false;
-        eyeSprite.SetActive(isTarget);
+        isHeld = false;
         SetResource();
         HideResource();
     }
 
     void Update()
     {
-        if(GameManager.Instance.State != GameManager.GameState.In_Game)
+        if (GameManager.Instance == null)
+        {
+            return;
+        }
+        if (GameManager.Instance.State != GameManager.GameState.In_Game)
         {
             return;
         }
@@ -44,6 +45,12 @@ public class NPCBehaviour : MonoBehaviour
 
     private void MoveToLaneGrid()
     {
+
+        if (IsHeld)
+        {
+            return;
+        }
+
         Vector3 pos = transform.position;
         pos.x += attributes.movementSpeed * Time.deltaTime;
 
@@ -91,7 +98,7 @@ public class NPCBehaviour : MonoBehaviour
             return;
         }
 
-        if(isTarget && currentGrid.GridState == LaneGrid.State.NonSelectable)
+        if(isHeld && currentGrid.GridState == LaneGrid.State.NonSelectable)
         {
             TownResourceBehaviour.Instance.AddToHungerMeter(attributes.foodResource + Random.Range(1, 3));
             TownResourceBehaviour.Instance.UseHappinessResource((attributes.foodResource - 1) * 1.55f);
@@ -110,10 +117,9 @@ public class NPCBehaviour : MonoBehaviour
         GameManager.Instance.WaveManager.RemoveIfTracked(this.gameObject);
     }
 
-    public void SetAsTarget(bool value)
+    public void SetIsHeld(bool value)
     {
-        isTarget = value;
-        eyeSprite.SetActive(value);
+        isHeld = value;
     }
 
     public void SetAttribute(NPCAttributes attributes)
@@ -124,6 +130,10 @@ public class NPCBehaviour : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (GameManager.Instance == null)
+        {
+            return;
+        }
         if (GameManager.Instance.State != GameManager.GameState.In_Game)
         {
             return;
@@ -140,14 +150,46 @@ public class NPCBehaviour : MonoBehaviour
         {
             return;
         }
-        SetAsTarget(!IsTarget);
 
-        // push to some eye watch list
+        previousPosition = transform.position;
+        GameManager.Instance.SetGodHandActive(true);
+        SetIsHeld(true);
+    }
+    private void OnMouseUp()
+    {
+        if (!IsHeld)
+        {
+            return;
+        }
+        GameManager.Instance.SetGodHandActive(false);
+        SetIsHeld(false);
+        transform.position = previousPosition;
+    }
+
+    private void OnMouseDrag()
+    {
+        if (!IsHeld)
+        {
+            return;
+        }
+
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        mouseWorldPos.z = 0f;
+        transform.position = mouseWorldPos;
     }
 
     private void OnMouseEnter()
     {
+        if(GameManager.Instance == null)
+        {
+            return;
+        }
         if (GameManager.Instance.State != GameManager.GameState.In_Game)
+        {
+            return;
+        }
+        if (GameManager.Instance.GodHandActive)
         {
             return;
         }
@@ -156,7 +198,15 @@ public class NPCBehaviour : MonoBehaviour
 
     private void OnMouseExit()
     {
+        if (GameManager.Instance == null)
+        {
+            return;
+        }
         if (GameManager.Instance.State != GameManager.GameState.In_Game)
+        {
+            return;
+        }
+        if (GameManager.Instance.GodHandActive)
         {
             return;
         }

@@ -86,6 +86,10 @@ public class TownResourceBehaviour : MonoBehaviour
 
     void Update()
     {
+        if(GameManager.Instance == null)
+        {
+            return;
+        }
         if(GameManager.Instance.State == GameManager.GameState.ShowingWave || GameManager.Instance.State == GameManager.GameState.ShowNewWave)
         {
             canvas.alpha = .35f;
