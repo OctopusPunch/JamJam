@@ -4849,6 +4849,7 @@ GameObject:
   - component: {fileID: -809708051148616839}
   - component: {fileID: 511798778496997969}
   - component: {fileID: 7539710013426921285}
+  - component: {fileID: 4180007315897679043}
   m_Layer: 0
   m_Name: NPC_0
   m_TagString: NPC
@@ -4945,8 +4946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCBehaviour
   attributes: {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-  isTarget: 0
-  eyeSprite: {fileID: 7523941652299050669}
+  isHeld: 0
   resourceCountText: {fileID: 6141643821522432943}
   currentGrid: {fileID: 0}
   targetGrid: {fileID: 0}
@@ -5012,6 +5012,33 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &4180007315897679043
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275498152413282245}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!1 &2175436543594558496
 GameObject:
   m_ObjectHideFlags: 0

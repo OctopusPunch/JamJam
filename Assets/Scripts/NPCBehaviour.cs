@@ -22,6 +22,7 @@ public class NPCBehaviour : MonoBehaviour
 
     private Vector3 previousPosition;
     private bool wasGodHanded = false;
+    private bool inFeedingRange = false;
 
     private void Start()
     {
@@ -99,15 +100,6 @@ public class NPCBehaviour : MonoBehaviour
             return;
         }
 
-        if(isHeld && currentGrid.GridState == LaneGrid.State.NonSelectable)
-        {
-            TownResourceBehaviour.Instance.AddToHungerMeter(attributes.foodResource + Random.Range(1, 3));
-            TownResourceBehaviour.Instance.UseHappinessResource((attributes.foodResource - 1) * 1.55f);
-            gameObject.SetActive(false);
-            wasGodHanded = false;
-            GameManager.Instance.WaveManager.RemoveIfTracked(this.gameObject);
-            return;
-        }
 
         if (currentGrid.GridState != LaneGrid.State.Safe)
         {
@@ -117,6 +109,7 @@ public class NPCBehaviour : MonoBehaviour
         TownResourceBehaviour.Instance.AddHappinessResource((attributes.foodResource - 1) * 1.35f);
         gameObject.SetActive(false);
         wasGodHanded = false;
+        inFeedingRange = false;
         GameManager.Instance.WaveManager.RemoveIfTracked(this.gameObject);
     }
 
@@ -164,6 +157,16 @@ public class NPCBehaviour : MonoBehaviour
         if (!IsHeld)
         {
             return;
+        }
+
+        if (inFeedingRange)
+        {
+            TownResourceBehaviour.Instance.AddToHungerMeter(attributes.foodResource + Random.Range(1, 3));
+            TownResourceBehaviour.Instance.UseHappinessResource((attributes.foodResource - 1) * 1.55f);
+            gameObject.SetActive(false);
+            wasGodHanded = false;
+            inFeedingRange = false;
+            GameManager.Instance.WaveManager.RemoveIfTracked(this.gameObject);
         }
         GameManager.Instance.SetGodHandActive(false);
         SetIsHeld(false);
@@ -235,5 +238,22 @@ public class NPCBehaviour : MonoBehaviour
     public void SetTargetGrid(LaneGrid laneGrid)
     {
         targetGrid = laneGrid;
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(!collision.CompareTag("Eye"))
+        {
+            return;
+        }
+        inFeedingRange = true;
+    }
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        if(!collision.CompareTag("Eye"))
+        {
+            return;
+        }
+        inFeedingRange = false;
     }
 }
