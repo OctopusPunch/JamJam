@@ -145,13 +145,18 @@ public class GameManager : MonoBehaviour
             }
             return;
         }
+
+
+
         spawnSubWaveInSeconds -= Time.deltaTime;
 
-        if(spawnSubWaveInSeconds > 0)
+        if (WaveManager.trackedNPCs.Count > 0)
         {
-            return;
+            if (spawnSubWaveInSeconds > 0)
+            {
+                return;
+            }
         }
-
         WaveManager.ReleaseNewSubwave();
 
         spawnSubWaveInSeconds = WaveManager.GetCurrentSubWaveSpawnTime();
