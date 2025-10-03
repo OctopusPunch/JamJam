@@ -95,18 +95,13 @@ public class NPCBehaviour : MonoBehaviour
 
         currentGrid = targetGrid;
 
-        if(currentGrid.GridState != LaneGrid.State.Safe && currentGrid.GridState != LaneGrid.State.NonSelectable)
-        {
-            return;
-        }
-
 
         if (currentGrid.GridState != LaneGrid.State.Safe)
         {
             return;
         }
         TownResourceBehaviour.Instance.AddFoodResource(attributes.foodResource);
-        TownResourceBehaviour.Instance.AddHappinessResource((attributes.foodResource - 1) * 1.35f);
+        TownResourceBehaviour.Instance.AddHappinessResource(wasGodHanded ? -2 : ((attributes.foodResource > 1) ? (attributes.foodResource - 1) * 1.35f : 1));
         gameObject.SetActive(false);
         wasGodHanded = false;
         inFeedingRange = false;
