@@ -24,6 +24,8 @@ public class NPCBehaviour : MonoBehaviour
     private bool wasGodHanded = false;
     private bool inFeedingRange = false;
 
+    private float waitToStartMoving;
+
     private void Start()
     {
         isHeld = false;
@@ -38,6 +40,12 @@ public class NPCBehaviour : MonoBehaviour
             return;
         }
         if (GameManager.Instance.State != GameManager.GameState.In_Game)
+        {
+            return;
+        }
+
+        waitToStartMoving -= Time.deltaTime;
+        if(waitToStartMoving > 0)
         {
             return;
         }
@@ -251,5 +259,10 @@ public class NPCBehaviour : MonoBehaviour
             return;
         }
         inFeedingRange = false;
+    }
+
+    public void SetWaitToStartMovement(float waitToStartMovement)
+    {
+        waitToStartMoving = waitToStartMovement;
     }
 }
