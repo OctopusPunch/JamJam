@@ -156,6 +156,7 @@ public class NPCBehaviour : MonoBehaviour
 
         if (inFeedingRange)
         {
+            ScreenShake.Instance.TriggerShake(.2f, .35f);
             TownResourceBehaviour.Instance.AddToHungerMeter(attributes.foodResource + Random.Range(1, 3));
             TownResourceBehaviour.Instance.UseHappinessResource((attributes.foodResource - 1) * 1.55f);
             gameObject.SetActive(false);

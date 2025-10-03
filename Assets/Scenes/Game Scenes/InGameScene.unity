@@ -1845,9 +1845,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VignetteEyeFollow
   volume: {fileID: 818262551}
-  followMouse: 1
-  pulse: 1
-  pulseAmplitude: 0.1
+  fadeSpeed: 2
+  minIntensity: 0.35
+  maxIntensity: 0.85
   pulseFrequency: 2
 --- !u!4 &818262553
 Transform:
@@ -4103,6 +4103,7 @@ GameObject:
   - component: {fileID: 2100857744}
   - component: {fileID: 2100857743}
   - component: {fileID: 2100857742}
+  - component: {fileID: 2100857747}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4252,6 +4253,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2100857747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2100857740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1a74e130583e7644b072c6ff3999a48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
