@@ -22,8 +22,6 @@ public class TownResourceBehaviour : MonoBehaviour
     private float startFoodValue = 70;
     private float currentFoodValue;
 
-    private float foodDrainSpeed;
-
 
     [Space(10)]
     [Header("Happiness Values")]
@@ -36,8 +34,6 @@ public class TownResourceBehaviour : MonoBehaviour
     [SerializeField]
     private float startHappinessValue = 70;
     private float currentHappinessValue;
-
-    private float happinessDrainSpeed;
 
 
     [Space(10)]
@@ -52,18 +48,17 @@ public class TownResourceBehaviour : MonoBehaviour
     private float startHungerValue = 50;
     private float currentHungerValue;
 
-    private float hungerDrainSpeed;
 
     [Space(10)]
     [Header("Resource Drain Values")]
     [SerializeField]
-    private float slowResourceDrain = .4f;
+    private float hungerDrainSpeed = .8f;
 
     [SerializeField]
-    private float normalResourceDrain = .8f;
+    private float happinessDrainSpeed = .4f;
 
     [SerializeField]
-    private float fastResourceDrain = 1.5f;
+    private float foodDrainSpeed = .8f;
 
     [SerializeField]
     CanvasGroup canvas;
@@ -83,13 +78,10 @@ public class TownResourceBehaviour : MonoBehaviour
     public void InitialiseResources()
     {
         currentHappinessValue = startHappinessValue;
-        happinessDrainSpeed = normalResourceDrain;
 
         currentFoodValue = startFoodValue;
-        foodDrainSpeed = normalResourceDrain;
 
         currentHungerValue = startHungerValue;
-        hungerDrainSpeed = normalResourceDrain;
     }
 
     void Update()

@@ -94,6 +94,7 @@ public class NPCBehaviour : MonoBehaviour
         if(isTarget && currentGrid.GridState == LaneGrid.State.NonSelectable)
         {
             TownResourceBehaviour.Instance.AddToHungerMeter(attributes.foodResource + Random.Range(1, 3));
+            TownResourceBehaviour.Instance.UseHappinessResource((attributes.foodResource - 1) * 1.55f);
             gameObject.SetActive(false);
             GameManager.Instance.WaveManager.RemoveIfTracked(this.gameObject);
             return;
@@ -104,7 +105,7 @@ public class NPCBehaviour : MonoBehaviour
             return;
         }
         TownResourceBehaviour.Instance.AddFoodResource(attributes.foodResource);
-        
+        TownResourceBehaviour.Instance.AddHappinessResource((attributes.foodResource - 1) * 1.35f);
         gameObject.SetActive(false);
         GameManager.Instance.WaveManager.RemoveIfTracked(this.gameObject);
     }
