@@ -1110,12 +1110,20 @@ PrefabInstance:
       value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 5660032911061802100, guid: 14df73a48a4613048ab55be52afab1e0, type: 3}
+      propertyPath: foodDrainSpeed
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5660032911061802100, guid: 14df73a48a4613048ab55be52afab1e0, type: 3}
       propertyPath: maxHungerValue
       value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 5660032911061802100, guid: 14df73a48a4613048ab55be52afab1e0, type: 3}
       propertyPath: maxHappinessValue
       value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 5660032911061802100, guid: 14df73a48a4613048ab55be52afab1e0, type: 3}
+      propertyPath: happinessDrainSpeed
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
