@@ -21,6 +21,7 @@ public class NPCBehaviour : MonoBehaviour
     private LaneGrid targetGrid;
 
     private Vector3 previousPosition;
+    private bool wasGodHanded = false;
 
     private void Start()
     {
@@ -52,7 +53,7 @@ public class NPCBehaviour : MonoBehaviour
         }
 
         Vector3 pos = transform.position;
-        pos.x += attributes.movementSpeed * Time.deltaTime;
+        pos.x += attributes.movementSpeed * (wasGodHanded ? 1.5f : 1) * Time.deltaTime;
 
         if(pos.x < targetGrid.transform.position.x)
         {
@@ -103,6 +104,7 @@ public class NPCBehaviour : MonoBehaviour
             TownResourceBehaviour.Instance.AddToHungerMeter(attributes.foodResource + Random.Range(1, 3));
             TownResourceBehaviour.Instance.UseHappinessResource((attributes.foodResource - 1) * 1.55f);
             gameObject.SetActive(false);
+            wasGodHanded = false;
             GameManager.Instance.WaveManager.RemoveIfTracked(this.gameObject);
             return;
         }
@@ -114,6 +116,7 @@ public class NPCBehaviour : MonoBehaviour
         TownResourceBehaviour.Instance.AddFoodResource(attributes.foodResource);
         TownResourceBehaviour.Instance.AddHappinessResource((attributes.foodResource - 1) * 1.35f);
         gameObject.SetActive(false);
+        wasGodHanded = false;
         GameManager.Instance.WaveManager.RemoveIfTracked(this.gameObject);
     }
 
@@ -154,6 +157,7 @@ public class NPCBehaviour : MonoBehaviour
         previousPosition = transform.position;
         GameManager.Instance.SetGodHandActive(true);
         SetIsHeld(true);
+        wasGodHanded = true;
     }
     private void OnMouseUp()
     {
