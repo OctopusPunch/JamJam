@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -140,6 +141,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        TownResourceBehaviour.Instance.InitialiseResources();
         WaveManager.ResetWaves();
         spawnSubWaveInSeconds = WaveManager.GetCurrentSubWaveSpawnTime();
         SetToInGame();

@@ -17,7 +17,9 @@ public class TownResourceBehaviour : MonoBehaviour
     [SerializeField]
     private TMPro.TMP_Text foodValueDisplay;
     [SerializeField]
-    private float maxFoodValue = 50;
+    private float maxFoodValue = 99;
+    [SerializeField]
+    private float startFoodValue = 70;
     private float currentFoodValue;
 
     private float foodDrainSpeed;
@@ -30,7 +32,9 @@ public class TownResourceBehaviour : MonoBehaviour
     [SerializeField]
     private TMPro.TMP_Text happinessValueDisplay;
     [SerializeField]
-    private float maxHappinessValue = 50;
+    private float maxHappinessValue = 99;
+    [SerializeField]
+    private float startHappinessValue = 70;
     private float currentHappinessValue;
 
     private float happinessDrainSpeed;
@@ -43,7 +47,9 @@ public class TownResourceBehaviour : MonoBehaviour
     [SerializeField]
     private TMPro.TMP_Text hungerValueDisplay;
     [SerializeField]
-    private float maxHungerValue = 50;
+    private float maxHungerValue = 99;
+    [SerializeField]
+    private float startHungerValue = 50;
     private float currentHungerValue;
 
     private float hungerDrainSpeed;
@@ -51,13 +57,13 @@ public class TownResourceBehaviour : MonoBehaviour
     [Space(10)]
     [Header("Resource Drain Values")]
     [SerializeField]
-    private float slowResourceDrain = .1f;
+    private float slowResourceDrain = .4f;
 
     [SerializeField]
-    private float normalResourceDrain = .3f;
+    private float normalResourceDrain = .8f;
 
     [SerializeField]
-    private float fastResourceDrain = 1;
+    private float fastResourceDrain = 1.5f;
 
     [SerializeField]
     CanvasGroup canvas;
@@ -76,13 +82,13 @@ public class TownResourceBehaviour : MonoBehaviour
 
     public void InitialiseResources()
     {
-        currentHappinessValue = maxHappinessValue;
+        currentHappinessValue = startHappinessValue;
         happinessDrainSpeed = normalResourceDrain;
 
-        currentFoodValue = maxFoodValue;
+        currentFoodValue = startFoodValue;
         foodDrainSpeed = normalResourceDrain;
 
-        currentHungerValue = maxHungerValue;
+        currentHungerValue = startHungerValue;
         hungerDrainSpeed = normalResourceDrain;
     }
 
@@ -104,7 +110,11 @@ public class TownResourceBehaviour : MonoBehaviour
 
     void DrainFoodOverTime()
     {
-        currentFoodValue -= foodDrainSpeed * Time.deltaTime;
+        float happinessRatio = currentHappinessValue / maxHappinessValue;
+        float speedMultiplier = 1f + Mathf.Pow(happinessRatio, 2);       
+        float adjustedFoodDrain = foodDrainSpeed * speedMultiplier;
+
+        currentFoodValue -= adjustedFoodDrain * Time.deltaTime;
         if (currentFoodValue < 0)
         {
             currentFoodValue = 0;
@@ -115,7 +125,11 @@ public class TownResourceBehaviour : MonoBehaviour
 
     void DrainHappinessOverTime()
     {
-        currentHappinessValue -= happinessDrainSpeed * Time.deltaTime;
+        float hungerRatio = currentHungerValue / maxHungerValue;
+        float speedMultiplier = 1f + Mathf.Pow(hungerRatio, 2);
+        float adjustedHappinessDrain = happinessDrainSpeed * speedMultiplier;
+        Debug.Log("adjustedHappinessDrain: " + adjustedHappinessDrain);
+        currentHappinessValue -= adjustedHappinessDrain * Time.deltaTime;
         if (currentHappinessValue < 0)
         {
             currentHappinessValue = 0;
@@ -126,7 +140,12 @@ public class TownResourceBehaviour : MonoBehaviour
 
     void DrainHungerOverTime()
     {
-        currentHungerValue -= hungerDrainSpeed * Time.deltaTime;
+        float foodRatio = currentFoodValue / maxFoodValue;
+        float happinessRatio = currentHappinessValue / maxHappinessValue;
+        float speedMultiplier = Mathf.Pow(foodRatio, 2) + Mathf.Pow(happinessRatio, 2);
+        float adjustedHungerDrain = hungerDrainSpeed * speedMultiplier;
+
+        currentHungerValue -= adjustedHungerDrain * Time.deltaTime;
         if (currentHungerValue < 0)
         {
             currentHungerValue = 0;

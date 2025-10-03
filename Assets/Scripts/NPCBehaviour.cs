@@ -127,6 +127,10 @@ public class NPCBehaviour : MonoBehaviour
         {
             return;
         }
+        if(currentGrid == null)
+        {
+            return;
+        }
         if (currentGrid.GridState == LaneGrid.State.NonSelectable)
         {
             return;

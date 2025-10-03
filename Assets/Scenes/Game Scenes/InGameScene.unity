@@ -1105,6 +1105,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Town Resource Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5660032911061802100, guid: 14df73a48a4613048ab55be52afab1e0, type: 3}
+      propertyPath: maxFoodValue
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 5660032911061802100, guid: 14df73a48a4613048ab55be52afab1e0, type: 3}
+      propertyPath: maxHungerValue
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 5660032911061802100, guid: 14df73a48a4613048ab55be52afab1e0, type: 3}
+      propertyPath: maxHappinessValue
+      value: 99
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1778,71 +1790,6 @@ MonoBehaviour:
   - {fileID: 71343763}
   - {fileID: 79199823}
   - {fileID: 91183866}
---- !u!1001 &943522412
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -809708051148616839, guid: 5f3df09b5cde8364b82443fdbedee187, type: 3}
-      propertyPath: targetGrid
-      value: 
-      objectReference: {fileID: 1860797283}
-    - target: {fileID: -809708051148616839, guid: 5f3df09b5cde8364b82443fdbedee187, type: 3}
-      propertyPath: currentGrid
-      value: 
-      objectReference: {fileID: 1860797283}
-    - target: {fileID: 1275498152413282245, guid: 5f3df09b5cde8364b82443fdbedee187, type: 3}
-      propertyPath: m_Name
-      value: NPC_0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232228238155905512, guid: 5f3df09b5cde8364b82443fdbedee187, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232228238155905512, guid: 5f3df09b5cde8364b82443fdbedee187, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232228238155905512, guid: 5f3df09b5cde8364b82443fdbedee187, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232228238155905512, guid: 5f3df09b5cde8364b82443fdbedee187, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232228238155905512, guid: 5f3df09b5cde8364b82443fdbedee187, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232228238155905512, guid: 5f3df09b5cde8364b82443fdbedee187, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232228238155905512, guid: 5f3df09b5cde8364b82443fdbedee187, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232228238155905512, guid: 5f3df09b5cde8364b82443fdbedee187, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232228238155905512, guid: 5f3df09b5cde8364b82443fdbedee187, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232228238155905512, guid: 5f3df09b5cde8364b82443fdbedee187, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5f3df09b5cde8364b82443fdbedee187, type: 3}
 --- !u!1001 &969322362
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3983,4 +3930,3 @@ SceneRoots:
   - {fileID: 1696312150}
   - {fileID: 1973863289}
   - {fileID: 463936838}
-  - {fileID: 943522412}

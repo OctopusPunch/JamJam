@@ -78,8 +78,8 @@ public class WaveManager
 
         SubWave subWave = Waves[currentWave].subWaves[currentSubWave];
 
-        
 
+        float xPrevious = 0;
         for(int i = 0; i < subWave.waveData.Count; i++)
         {
             GameObject npc = npcPools.Dequeue();
@@ -88,7 +88,8 @@ public class WaveManager
             npc.transform.position = lanes[Random.Range(0, lanes.Length)].grid[0].transform.position;
 
             Vector3 pos = npc.transform.position;
-            pos.x += Random.Range(-5.25f, -.25f);
+            pos.x += Random.Range(-2.25f, -.5f) + xPrevious;
+            xPrevious = pos.x;
             pos.y += Random.Range(-.45f, .45f);
 
             npc.transform.position = pos;
