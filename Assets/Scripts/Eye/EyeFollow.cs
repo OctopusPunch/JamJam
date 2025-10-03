@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class EyeFollow: MonoBehaviour
+public class EyeFollow : MonoBehaviour
 {
     [SerializeField] string propertyName = "_EyeOffsetPX";
     [SerializeField] int center = 64;
@@ -18,6 +18,21 @@ public class EyeFollow: MonoBehaviour
     Camera cam;
     Vector2 current;
     Vector2 velocity;
+
+    public Camera Cam => cam;
+    public float RadiusPixels => radiusPixels;
+
+    public void SetFollowTarget(Transform t)
+    {
+        target = t;
+        followTarget = t != null;
+    }
+
+    public void ClearFollowTarget()
+    {
+        target = null;
+        followTarget = false;
+    }
 
     void Awake()
     {
@@ -50,7 +65,7 @@ public class EyeFollow: MonoBehaviour
         current = Vector2.SmoothDamp(current, targetPx, ref velocity, smoothTime);
 
         sr.GetPropertyBlock(mpb);
-        mpb.SetVector(propertyName, new Vector4(current.x, current.y, 0f, 0f));
+        mpb.SetVector(propertyName, new Vector4(current.x, current.y - 10, 0f, 0f));
         sr.SetPropertyBlock(mpb);
     }
 }
