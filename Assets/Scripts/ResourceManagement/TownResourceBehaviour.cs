@@ -187,6 +187,10 @@ public class TownResourceBehaviour : MonoBehaviour
         {
             currentHappinessValue = maxHappinessValue;
         }
+        if(currentHappinessValue < 0)
+        {
+            currentHappinessValue = 0;
+        }
     }
 
     public bool UseFoodResource(float value)
@@ -220,6 +224,10 @@ public class TownResourceBehaviour : MonoBehaviour
         if (currentFoodValue > maxFoodValue)
         {
             currentFoodValue = maxFoodValue;
+        }
+        if (currentFoodValue < 0)
+        {
+            currentFoodValue = 0;
         }
     }
 
@@ -255,6 +263,10 @@ public class TownResourceBehaviour : MonoBehaviour
         if (currentHungerValue > maxHungerValue)
         {
             currentHungerValue = maxHungerValue;
+        }
+        if(currentHungerValue < 0)
+        {
+            currentHungerValue = 0;
         }
     }
 }
