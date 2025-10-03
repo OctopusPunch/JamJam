@@ -112,8 +112,8 @@ public class TownResourceBehaviour : MonoBehaviour
     void DrainFoodOverTime()
     {
         float happinessRatio = currentHappinessValue / maxHappinessValue;
-        float speedMultiplier = 1f + Mathf.Pow(happinessRatio, 2);       
-        float adjustedFoodDrain = foodDrainSpeed + (foodDrainSpeed/2f * speedMultiplier);
+        float speedMultiplier = 1f + happinessRatio;
+        float adjustedFoodDrain = foodDrainSpeed * speedMultiplier;
 
         currentFoodValue -= adjustedFoodDrain * Time.deltaTime;
         if (currentFoodValue < 0)
@@ -127,8 +127,8 @@ public class TownResourceBehaviour : MonoBehaviour
     void DrainHappinessOverTime()
     {
         float hungerRatio = currentHungerValue / maxHungerValue;
-        float speedMultiplier = 1f + Mathf.Pow(hungerRatio, 2);
-        float adjustedHappinessDrain = happinessDrainSpeed + (happinessDrainSpeed/2f * speedMultiplier);
+        float speedMultiplier = 1f + hungerRatio;
+        float adjustedHappinessDrain = happinessDrainSpeed * speedMultiplier;
 
         currentHappinessValue -= adjustedHappinessDrain * Time.deltaTime;
         if (currentHappinessValue < 0)
@@ -143,8 +143,8 @@ public class TownResourceBehaviour : MonoBehaviour
     {
         float foodRatio = currentFoodValue / maxFoodValue;
         float happinessRatio = currentHappinessValue / maxHappinessValue;
-        float speedMultiplier = Mathf.Pow(foodRatio, 2) + Mathf.Pow(happinessRatio, 2);
-        float adjustedHungerDrain = hungerDrainSpeed + (hungerDrainSpeed/2f * speedMultiplier);
+        float speedMultiplier = 1f + (foodRatio * happinessRatio);
+        float adjustedHungerDrain = hungerDrainSpeed * speedMultiplier;
 
         currentHungerValue -= adjustedHungerDrain * Time.deltaTime;
         if (currentHungerValue < 0)
@@ -182,15 +182,9 @@ public class TownResourceBehaviour : MonoBehaviour
 
     public void AddHappinessResource(float value)
     {
-        currentHappinessValue += value;
-        if(currentHappinessValue > maxHappinessValue)
-        {
-            currentHappinessValue = maxHappinessValue;
-        }
-        if(currentHappinessValue < 0)
-        {
-            currentHappinessValue = 0;
-        }
+        float scaledValue = value * (1f - currentHappinessValue / maxHappinessValue);
+        currentHappinessValue += scaledValue;
+        currentHappinessValue = Mathf.Clamp(currentHappinessValue, 0f, maxHappinessValue);
     }
 
     public bool UseFoodResource(float value)
@@ -220,15 +214,9 @@ public class TownResourceBehaviour : MonoBehaviour
 
     public void AddFoodResource(float value)
     {
-        currentFoodValue += value;
-        if (currentFoodValue > maxFoodValue)
-        {
-            currentFoodValue = maxFoodValue;
-        }
-        if (currentFoodValue < 0)
-        {
-            currentFoodValue = 0;
-        }
+        float scaledValue = value * (1f - (currentFoodValue / maxFoodValue));
+        currentFoodValue += scaledValue;
+        currentFoodValue = Mathf.Clamp(currentFoodValue, 0f, maxFoodValue);
     }
 
 
