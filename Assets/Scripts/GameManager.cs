@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,7 +24,8 @@ public class GameManager : MonoBehaviour
         In_Game,
         Lose,
         Win,
-        ShowNewWave
+        ShowNewWave,
+        ShowingWave
     }
 
     public GameState State => state;
@@ -41,6 +43,16 @@ public class GameManager : MonoBehaviour
     private GameObject settingsUI;
     [SerializeField]
     private GameObject PauseButton;
+    [SerializeField]
+    private GameObject waveUI;
+    [SerializeField]
+    private GameObject winUI;
+    [SerializeField]
+    private GameObject loseUI;
+
+    [Header("Wave UI")]
+    [SerializeField]
+    private TextMeshProUGUI waveUIWaveNumber;
 
 
     // in game stuffs
@@ -84,18 +96,27 @@ public class GameManager : MonoBehaviour
 
             case GameState.In_Game:
                 InGameUpdate();
-                // Update
                 return;
 
             case GameState.Lose:
-                // Show Lose Menu?
+                loseUI.SetActive(true);
                 return;
 
             case GameState.Win:
-                Debug.Log("All Waves done.");
+                winUI.SetActive(true);
                 return;
             case GameState.ShowNewWave:
                 StartCoroutine(ShowWaveUI());
+                waveNumberUIShowing = true;
+
+                state = GameState.ShowingWave;
+                break;
+                case GameState.ShowingWave:
+                if(waveNumberUIShowing)
+                {
+                    return;
+                }
+                state = GameState.In_Game;
                 break;
         }
     }
@@ -136,15 +157,22 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(mainMenuUI);
         DontDestroyOnLoad(settingsUI);
         DontDestroyOnLoad(PauseButton);
+        DontDestroyOnLoad(waveUI);
+        DontDestroyOnLoad(winUI);
+        DontDestroyOnLoad(loseUI);
     }
 
 
     public void StartGame()
     {
+        waveNumberUIShowing = true;
+        mainMenuUI.SetActive(false);
+
+        state = GameState.ShowingWave;
         TownResourceBehaviour.Instance.InitialiseResources();
         WaveManager.ResetWaves();
         spawnSubWaveInSeconds = WaveManager.GetCurrentSubWaveSpawnTime();
-        SetToInGame();
+        StartCoroutine(ShowWaveUI());
     }
 
 
@@ -170,6 +198,8 @@ public class GameManager : MonoBehaviour
         state = GameState.MainMenu;
         pauseUI.SetActive(false);
         mainMenuUI.SetActive(true);
+        winUI.SetActive(false);
+        loseUI.SetActive(false);
     }
     public void SetToPaused()
     {
@@ -226,9 +256,9 @@ public class GameManager : MonoBehaviour
 
     IEnumerator ShowWaveUI()
     {
-        Debug.Log("Show Wave Number");
-        waveNumberUIShowing = true;
-        state = GameState.In_Game;
+        waveUIWaveNumber.text = (1 + WaveManager.currentWave).ToString();
+
+        waveUI.SetActive(true);
 
         float waitForSeconds = 3;
 
@@ -240,5 +270,6 @@ public class GameManager : MonoBehaviour
         }
 
         waveNumberUIShowing = false;
+        waveUI.SetActive(false);
     }
 }

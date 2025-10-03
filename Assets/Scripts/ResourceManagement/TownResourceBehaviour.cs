@@ -86,6 +86,11 @@ public class TownResourceBehaviour : MonoBehaviour
 
     void Update()
     {
+        if(GameManager.Instance.State == GameManager.GameState.ShowingWave || GameManager.Instance.State == GameManager.GameState.ShowNewWave)
+        {
+            canvas.alpha = .35f;
+            return;
+        }
         if(GameManager.Instance.State != GameManager.GameState.In_Game)
         {
             canvas.alpha = 0;
@@ -104,7 +109,7 @@ public class TownResourceBehaviour : MonoBehaviour
     {
         float happinessRatio = currentHappinessValue / maxHappinessValue;
         float speedMultiplier = 1f + Mathf.Pow(happinessRatio, 2);       
-        float adjustedFoodDrain = foodDrainSpeed * speedMultiplier;
+        float adjustedFoodDrain = foodDrainSpeed + (foodDrainSpeed/2f * speedMultiplier);
 
         currentFoodValue -= adjustedFoodDrain * Time.deltaTime;
         if (currentFoodValue < 0)
@@ -119,8 +124,8 @@ public class TownResourceBehaviour : MonoBehaviour
     {
         float hungerRatio = currentHungerValue / maxHungerValue;
         float speedMultiplier = 1f + Mathf.Pow(hungerRatio, 2);
-        float adjustedHappinessDrain = happinessDrainSpeed * speedMultiplier;
-        Debug.Log("adjustedHappinessDrain: " + adjustedHappinessDrain);
+        float adjustedHappinessDrain = happinessDrainSpeed + (happinessDrainSpeed/2f * speedMultiplier);
+
         currentHappinessValue -= adjustedHappinessDrain * Time.deltaTime;
         if (currentHappinessValue < 0)
         {
@@ -135,7 +140,7 @@ public class TownResourceBehaviour : MonoBehaviour
         float foodRatio = currentFoodValue / maxFoodValue;
         float happinessRatio = currentHappinessValue / maxHappinessValue;
         float speedMultiplier = Mathf.Pow(foodRatio, 2) + Mathf.Pow(happinessRatio, 2);
-        float adjustedHungerDrain = hungerDrainSpeed * speedMultiplier;
+        float adjustedHungerDrain = hungerDrainSpeed + (hungerDrainSpeed/2f * speedMultiplier);
 
         currentHungerValue -= adjustedHungerDrain * Time.deltaTime;
         if (currentHungerValue < 0)
