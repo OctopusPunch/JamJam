@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCAttributes
   movementSpeed: 1.5
   resourceType1: 0
-  resourceAmount1: 1
+  resourceAmount1: 5
   resourceType2: 1
-  resourceAmount2: 1
+  resourceAmount2: 5

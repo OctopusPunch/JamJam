@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 50
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 50
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -469,23 +469,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TownResourceBehaviour
   foodMeter: {fileID: 5618311534564581468}
   foodValueDisplay: {fileID: 3688294596301002690}
-  maxFoodValue: 50
-  startFoodValue: 70
+  targetFoodValue: 99
   waterMeter: {fileID: 7053674656605572051}
   waterValueDisplay: {fileID: 3557244533632580908}
-  maxWaterValue: 99
-  startWaterValue: 70
+  targetWaterValue: 99
   goldMeter: {fileID: 3739803247428726802}
   goldValueDisplay: {fileID: 2986820359829416078}
-  maxGoldValue: 99
-  startGoldValue: 70
+  targetGoldValue: 99
   hungerMeter: {fileID: 4006611529686741463}
   hungerValueDisplay: {fileID: 2897798395553764978}
-  maxHungerValue: 50
-  startHungerValue: 50
-  hungerDrainSpeed: 0.8
-  happinessDrainSpeed: 0.4
-  foodDrainSpeed: 0.8
+  targetHungerValue: 99
   canvas: {fileID: 2661933972857185563}
 --- !u!225 &2661933972857185563
 CanvasGroup:
@@ -716,7 +709,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 50
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -852,7 +845,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 50
+  m_text: 3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

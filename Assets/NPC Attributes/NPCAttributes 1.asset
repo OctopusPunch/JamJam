@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1a2326c4b334e04f9c1dab6363b7f64, type: 3}
   m_Name: NPCAttributes 1
   m_EditorClassIdentifier: Assembly-CSharp::NPCAttributes
-  movementSpeed: 1
+  movementSpeed: 1.5
   resourceType1: 2
-  resourceAmount1: 1
-  resourceType2: 0
+  resourceAmount1: 5
+  resourceType2: 3
   resourceAmount2: 0

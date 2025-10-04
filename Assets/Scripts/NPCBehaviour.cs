@@ -199,14 +199,6 @@ public class NPCBehaviour : MonoBehaviour
         if (inFeedingRange)
         {
             ScreenShake.Instance.TriggerShake(.2f, .35f);
-            if (attributes.resourceType1 != NPCAttributes.ResourceType.None)
-            {
-                TownResourceBehaviour.Instance.AdjustHungerMeter(attributes.resourceAmount1);
-            }
-            if (attributes.resourceType2 != NPCAttributes.ResourceType.None)
-            {
-                TownResourceBehaviour.Instance.AdjustHungerMeter(attributes.resourceAmount2);
-            }
             gameObject.SetActive(false);
             wasGodHanded = false;
             inFeedingRange = false;
