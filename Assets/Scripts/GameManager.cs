@@ -211,7 +211,7 @@ public class GameManager : MonoBehaviour
         mainMenuUI.SetActive(false);
 
         state = GameState.ShowingWave;
-        TownResourceBehaviour.Instance.InitialiseResources();
+        TownResourceBehaviour.Instance.ResetResources();
         WaveManager.ResetWaves();
         spawnSubWaveInSeconds = WaveManager.GetCurrentSubWaveSpawnTime();
         StartCoroutine(ShowWaveUI());

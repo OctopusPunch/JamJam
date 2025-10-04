@@ -402,22 +402,22 @@ MonoBehaviour:
     - subWaves:
       - waveData:
         - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: 7d1fc867ac25e7d4aa57360c191df553, type: 2}
         - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: 7d1fc867ac25e7d4aa57360c191df553, type: 2}
         - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
         spawnSubWaveInSeconds: 3
       - waveData:
         - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
         - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: 7d1fc867ac25e7d4aa57360c191df553, type: 2}
         - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: 7d1fc867ac25e7d4aa57360c191df553, type: 2}
         spawnSubWaveInSeconds: 6
       - waveData:
+        - {fileID: 11400000, guid: 7d1fc867ac25e7d4aa57360c191df553, type: 2}
         - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+        - {fileID: 11400000, guid: 7d1fc867ac25e7d4aa57360c191df553, type: 2}
         - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
         - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
         spawnSubWaveInSeconds: 4
