@@ -3,9 +3,15 @@ using UnityEngine.UI;
 
 public class TownResourceBehaviour : MonoBehaviour
 {
-    public float CurretFoodValue => currentFoodValue;
-    public float CurrentHappinessValue => currentHappinessValue;
-    public float CurrentHungerValue => currentHungerValue;
+    public int CurretFoodValue => currentFoodValue;
+    public int CurrentWaterValue => currentWaterValue;
+    public int CurrentHungerValue => currentHungerValue;
+    public int CurrentGoldValue => currentGoldValue;
+
+    public int TargetFoodValue => targetFoodValue;
+    public int TargetWaterValue => targetWaterValue;
+    public int TargetHungerValue => targetHungerValue;
+    public int TargetGoldValue => targetGoldValue;
 
 
     public static TownResourceBehaviour Instance => _instance;
@@ -17,23 +23,30 @@ public class TownResourceBehaviour : MonoBehaviour
     [SerializeField]
     private TMPro.TMP_Text foodValueDisplay;
     [SerializeField]
-    private float maxFoodValue = 99;
-    [SerializeField]
-    private float startFoodValue = 70;
-    private float currentFoodValue;
+    private int targetFoodValue = 99;
+    private int currentFoodValue;
 
 
     [Space(10)]
-    [Header("Happiness Values")]
+    [Header("Water Values")]
     [SerializeField]
-    private Image happinessMeter;
+    private Image waterMeter;
     [SerializeField]
-    private TMPro.TMP_Text happinessValueDisplay;
+    private TMPro.TMP_Text waterValueDisplay;
     [SerializeField]
-    private float maxHappinessValue = 99;
+    private int targetWaterValue = 99;
+    private int currentWaterValue;
+
+
+    [Space(10)]
+    [Header("Gold Values")]
     [SerializeField]
-    private float startHappinessValue = 70;
-    private float currentHappinessValue;
+    private Image goldMeter;
+    [SerializeField]
+    private TMPro.TMP_Text goldValueDisplay;
+    [SerializeField]
+    private int targetGoldValue = 99;
+    private int currentGoldValue;
 
 
     [Space(10)]
@@ -43,22 +56,9 @@ public class TownResourceBehaviour : MonoBehaviour
     [SerializeField]
     private TMPro.TMP_Text hungerValueDisplay;
     [SerializeField]
-    private float maxHungerValue = 99;
-    [SerializeField]
-    private float startHungerValue = 50;
-    private float currentHungerValue;
+    private int targetHungerValue = 99;
+    private int currentHungerValue;
 
-
-    [Space(10)]
-    [Header("Resource Drain Values")]
-    [SerializeField]
-    private float hungerDrainSpeed = .8f;
-
-    [SerializeField]
-    private float happinessDrainSpeed = .4f;
-
-    [SerializeField]
-    private float foodDrainSpeed = .8f;
 
     [SerializeField]
     CanvasGroup canvas;
@@ -67,7 +67,7 @@ public class TownResourceBehaviour : MonoBehaviour
     {
         canvas.alpha = 0;
         _instance = this;
-        InitialiseResources();
+        ResetResources();
     }
 
     private void OnDestroy()
@@ -75,13 +75,20 @@ public class TownResourceBehaviour : MonoBehaviour
         _instance = null;
     }
 
-    public void InitialiseResources()
+    public void ResetResources()
     {
-        currentHappinessValue = startHappinessValue;
+        currentWaterValue = 0;
 
-        currentFoodValue = startFoodValue;
+        currentFoodValue = 0;
 
-        currentHungerValue = startHungerValue;
+        currentHungerValue = 0;
+
+        currentGoldValue = 0;
+
+        hungerValueDisplay.text = "0";
+        goldValueDisplay.text = "0";
+        waterValueDisplay.text = "0";
+        foodValueDisplay.text = "0";
     }
 
     void Update()
@@ -93,6 +100,7 @@ public class TownResourceBehaviour : MonoBehaviour
         if(GameManager.Instance.State == GameManager.GameState.ShowingWave || GameManager.Instance.State == GameManager.GameState.ShowNewWave)
         {
             canvas.alpha = .35f;
+            SetDisplayText();
             return;
         }
         if(GameManager.Instance.State != GameManager.GameState.In_Game)
@@ -102,128 +110,51 @@ public class TownResourceBehaviour : MonoBehaviour
         }
 
         canvas.alpha = 1.0f;
-
-        DrainFoodOverTime();
-        DrainHappinessOverTime();
-        DrainHungerOverTime();
+        SetDisplayText();
     }
 
-
-    void DrainFoodOverTime()
+    void SetDisplayText()
     {
-        float happinessRatio = currentHappinessValue / maxHappinessValue;
-        float speedMultiplier = 1f + Mathf.Pow(happinessRatio, 2);       
-        float adjustedFoodDrain = foodDrainSpeed + (foodDrainSpeed/2f * speedMultiplier);
-
-        currentFoodValue -= adjustedFoodDrain * Time.deltaTime;
-        if (currentFoodValue < 0)
-        {
-            currentFoodValue = 0;
-        }
-        foodMeter.fillAmount = currentFoodValue / maxFoodValue;
-        foodValueDisplay.text = currentFoodValue.ToString("0");
+        hungerValueDisplay.text = CurrentHungerValue.ToString();
+        goldValueDisplay.text = CurrentGoldValue.ToString();
+        waterValueDisplay.text = CurrentWaterValue.ToString();
+        foodValueDisplay.text = CurretFoodValue.ToString();
     }
 
-    void DrainHappinessOverTime()
+    public void SetTargetWaterValue(int value)
     {
-        float hungerRatio = currentHungerValue / maxHungerValue;
-        float speedMultiplier = 1f + Mathf.Pow(hungerRatio, 2);
-        float adjustedHappinessDrain = happinessDrainSpeed + (happinessDrainSpeed/2f * speedMultiplier);
-
-        currentHappinessValue -= adjustedHappinessDrain * Time.deltaTime;
-        if (currentHappinessValue < 0)
-        {
-            currentHappinessValue = 0;
-        }
-        happinessMeter.fillAmount = currentHappinessValue / maxHappinessValue;
-        happinessValueDisplay.text = currentHappinessValue.ToString("0");
+        targetWaterValue = value;
     }
 
-    void DrainHungerOverTime()
+    public void AdjustWaterResource(int value)
     {
-        float foodRatio = currentFoodValue / maxFoodValue;
-        float happinessRatio = currentHappinessValue / maxHappinessValue;
-        float speedMultiplier = Mathf.Pow(foodRatio, 2) + Mathf.Pow(happinessRatio, 2);
-        float adjustedHungerDrain = hungerDrainSpeed + (hungerDrainSpeed/2f * speedMultiplier);
-
-        currentHungerValue -= adjustedHungerDrain * Time.deltaTime;
-        if (currentHungerValue < 0)
+        currentWaterValue += value;
+        if(currentWaterValue > targetWaterValue)
         {
-            currentHungerValue = 0;
+            currentWaterValue = targetWaterValue;
         }
-        hungerMeter.fillAmount = currentHungerValue / maxHungerValue;
-        hungerValueDisplay.text = currentHungerValue.ToString("0");
+        if(currentWaterValue < 0)
+        {
+            currentWaterValue = 0;
+        }
     }
 
-    public bool UseHappinessResource(float value)
+    public void ResetWaterMeter()
     {
-        if (value <= 0)
-        {
-            return false;
-        }
-
-        if (currentHappinessValue <= 0)
-        {
-            return false;
-        }
-
-        if (currentHappinessValue < value)
-        {
-            return false;
-        }
-
-        currentHappinessValue -= value;
-        if (currentHappinessValue < 0)
-        {
-            currentHappinessValue = 0;
-        }
-        return true;
+        currentWaterValue = 0;
     }
 
-    public void AddHappinessResource(float value)
+
+    public void SetTargetFoodValue(int value)
     {
-        currentHappinessValue += value;
-        if(currentHappinessValue > maxHappinessValue)
-        {
-            currentHappinessValue = maxHappinessValue;
-        }
-        if(currentHappinessValue < 0)
-        {
-            currentHappinessValue = 0;
-        }
+        targetFoodValue = value;
     }
-
-    public bool UseFoodResource(float value)
-    {
-        if (value <= 0)
-        {
-            return false;
-        }
-
-        if (currentFoodValue <= 0)
-        {
-            return false;
-        }
-
-        if (currentFoodValue < value)
-        {
-            return false;
-        }
-
-        currentFoodValue -= value;
-        if (currentFoodValue < 0)
-        {
-            currentFoodValue = 0;
-        }
-        return true;
-    }
-
-    public void AddFoodResource(float value)
+    public void AdjustFoodResource(int value)
     {
         currentFoodValue += value;
-        if (currentFoodValue > maxFoodValue)
+        if (currentFoodValue > targetFoodValue)
         {
-            currentFoodValue = maxFoodValue;
+            currentFoodValue = targetFoodValue;
         }
         if (currentFoodValue < 0)
         {
@@ -231,42 +162,53 @@ public class TownResourceBehaviour : MonoBehaviour
         }
     }
 
-
-    public bool UseHungerMeter(float value)
+    public void ResetFoodMeter()
     {
-        if(value <= 0)
-        {
-            return false;
-        }
-
-        if (currentHungerValue <= 0)
-        {
-            return false;
-        }
-
-        if (currentHungerValue < value)
-        {
-            return false;
-        }
-
-        currentHungerValue -= value;
-        if (currentHungerValue < 0)
-        {
-            currentHungerValue = 0;
-        }
-        return true;
+        currentFoodValue = 0;
     }
 
-    public void AddToHungerMeter(float value)
+    public void SetTargetHungerValue(int value)
+    {
+        targetHungerValue = value;
+    }
+    public void AdjustHungerMeter(int value)
     {
         currentHungerValue += value;
-        if (currentHungerValue > maxHungerValue)
+        if (currentHungerValue > targetHungerValue)
         {
-            currentHungerValue = maxHungerValue;
+            currentHungerValue = targetHungerValue;
         }
         if(currentHungerValue < 0)
         {
             currentHungerValue = 0;
         }
+    }
+
+    public void ResetHungerMeter()
+    {
+        currentHungerValue = 0;
+    }
+
+    public void SetTargetGoldValue(int value)
+    {
+        targetGoldValue = value;
+    }
+
+    public void AdjustGoldMeter(int value)
+    {
+        currentGoldValue += value;
+        if (currentGoldValue > targetGoldValue)
+        {
+            currentGoldValue = targetGoldValue;
+        }
+        if(currentGoldValue < 0)
+        {
+            currentGoldValue = 0;
+        }
+    }
+
+    public void ResetGoldMeter()
+    {
+        currentGoldValue = 0;
     }
 }
