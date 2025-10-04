@@ -4,6 +4,9 @@ using UnityEngine;
 [System.Serializable]
 public class Waves
 {
+    public Demand monsterDemand;
+    public Demand townDemand;
+
     public List<SubWave> subWaves = new List<SubWave>();
 
 
