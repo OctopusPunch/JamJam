@@ -71,7 +71,7 @@ public class NPCBehaviour : MonoBehaviour
         }
 
         Vector3 pos = transform.position;
-        pos.x += attributes.movementSpeed * (perfectRunSpeed ? 4 : (wasGodHanded ? 2.3f : 1)) * Time.deltaTime;
+        pos.x += attributes.movementSpeed * (perfectRunSpeed ? 7 : (wasGodHanded ? 2.3f : 1)) * Time.deltaTime;
 
         if(pos.x < targetGrid.transform.position.x)
         {
@@ -192,6 +192,10 @@ public class NPCBehaviour : MonoBehaviour
         {
             return;
         }
+        if(perfectRunSpeed)
+        {
+            return;
+        }
 
         previousPosition = transform.position;
         GameManager.Instance.SetGodHandActive(true);
@@ -246,6 +250,26 @@ public class NPCBehaviour : MonoBehaviour
         }
         if (GameManager.Instance.GodHandActive)
         {
+            return;
+        }
+        if (perfectRunSpeed)
+        {
+            HideResource();
+            return;
+        }
+        if (currentGrid == null)
+        {
+            HideResource();
+            return;
+        }
+        if(currentGrid.GridState == LaneGrid.State.Safe)
+        {
+            HideResource();
+            return;
+        }
+        if(currentGrid.GridState == LaneGrid.State.NonSelectable)
+        {
+            HideResource();
             return;
         }
         ShowReseource();
