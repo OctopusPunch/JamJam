@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VignetteEyeFollow : MonoBehaviour
+public class VignetteEyeFollowWebGL : MonoBehaviour
 {
     public Image image;
     public Transform target;
