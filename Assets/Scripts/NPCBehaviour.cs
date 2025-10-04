@@ -22,12 +22,16 @@ public class NPCBehaviour : MonoBehaviour
 
     private Vector3 previousPosition;
     private bool wasGodHanded = false;
+    private bool perfectRunSpeed = false;
     private bool inFeedingRange = false;
 
     private float waitToStartMoving;
 
-    private void Start()
+
+    private void OnEnable()
     {
+        perfectRunSpeed = false;
+        wasGodHanded = false;
         isHeld = false;
         SetResource();
         HideResource();
@@ -53,6 +57,11 @@ public class NPCBehaviour : MonoBehaviour
         UpdateCurrentGrid();
     }
 
+    public void PerfectRun()
+    {
+        perfectRunSpeed = true;
+    }
+
     private void MoveToLaneGrid()
     {
 
@@ -62,7 +71,7 @@ public class NPCBehaviour : MonoBehaviour
         }
 
         Vector3 pos = transform.position;
-        pos.x += attributes.movementSpeed * (wasGodHanded ? 2.3f : 1) * Time.deltaTime;
+        pos.x += attributes.movementSpeed * (perfectRunSpeed ? 4 : (wasGodHanded ? 2.3f : 1)) * Time.deltaTime;
 
         if(pos.x < targetGrid.transform.position.x)
         {
@@ -203,11 +212,14 @@ public class NPCBehaviour : MonoBehaviour
             wasGodHanded = false;
             inFeedingRange = false;
             GameManager.Instance.WaveManager.RemoveIfTracked(this.gameObject);
+            GameManager.Instance.WaveManager.CheckTrackedAllMatchTargets();
         }
         GameManager.Instance.SetGodHandActive(false);
         SetIsHeld(false);
         transform.position = previousPosition;
     }
+
+
 
     private void OnMouseDrag()
     {
@@ -258,6 +270,10 @@ public class NPCBehaviour : MonoBehaviour
 
     void SetResource()
     {
+        if(attributes == null)
+        {
+            return;
+        }
         resourceCountText.text = attributes.GetResourceInfo();
     }
 
@@ -274,6 +290,10 @@ public class NPCBehaviour : MonoBehaviour
     public void SetTargetGrid(LaneGrid laneGrid)
     {
         targetGrid = laneGrid;
+    }
+    public void SetCurrentGrid(LaneGrid laneGrid)
+    {
+        currentGrid = laneGrid;
     }
 
     public void OnTriggerEnter2D(Collider2D collision)

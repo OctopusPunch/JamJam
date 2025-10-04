@@ -4944,7 +4944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77a5d0aaae6d5e843a073f0ed606219b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCBehaviour
-  attributes: {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+  attributes: {fileID: 0}
   isHeld: 0
   resourceCountText: {fileID: 6141643821522432943}
   currentGrid: {fileID: 0}
@@ -5098,7 +5098,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2347
   m_TargetDisplay: 0
 --- !u!114 &2138138976252626573
 MonoBehaviour:

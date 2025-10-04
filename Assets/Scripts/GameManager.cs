@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public bool GodHandActive => godHandActive;
-    public WaveManager WaveManager;
+    public DeckManager WaveManager;
 
     public GameObject PauseUI => pauseUI;
     public GameObject MainMenuUI => mainMenuUI;
@@ -147,23 +147,6 @@ public class GameManager : MonoBehaviour
     {
         GodHandSlowDown();
 
-        if (WaveManager.beginNewWave)
-        {
-            if (WaveManager.currentWave >= WaveManager.Waves.Count)
-            {
-                state = GameState.Win;
-                return;
-            }
-            if (WaveManager.trackedNPCs.Count == 0)
-            {
-                state = GameState.ShowNewWave;
-                spawnSubWaveInSeconds = WaveManager.GetCurrentSubWaveSpawnTime();
-                WaveManager.beginNewWave = false;
-            }
-            return;
-        }
-
-
 
         if (WaveManager.trackedNPCs.Count > 0)
         {
@@ -175,7 +158,7 @@ public class GameManager : MonoBehaviour
             state = GameState.RunCheckScore;
         }
         isFirstWave = false;
-        WaveManager.ReleaseNewSubwave();
+        WaveManager.ReleaseNewWave();
 
     }
 
@@ -235,7 +218,6 @@ public class GameManager : MonoBehaviour
 
         TownResourceBehaviour.Instance.ResetResources();
         WaveManager.ResetWaves();
-        spawnSubWaveInSeconds = WaveManager.GetCurrentSubWaveSpawnTime();
         StartCoroutine(ShowWaveUI());
     }
 

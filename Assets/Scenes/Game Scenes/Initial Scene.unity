@@ -398,59 +398,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   WaveManager:
-    Waves:
-    - subWaves:
-      - waveData:
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: 7d1fc867ac25e7d4aa57360c191df553, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: 7d1fc867ac25e7d4aa57360c191df553, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        spawnSubWaveInSeconds: 3
-      - waveData:
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: 7d1fc867ac25e7d4aa57360c191df553, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: 7d1fc867ac25e7d4aa57360c191df553, type: 2}
-        spawnSubWaveInSeconds: 6
-      - waveData:
-        - {fileID: 11400000, guid: 7d1fc867ac25e7d4aa57360c191df553, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: 7d1fc867ac25e7d4aa57360c191df553, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        spawnSubWaveInSeconds: 4
-      possibleEvents: []
-      eventChances: 0
-    - subWaves:
-      - waveData:
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        spawnSubWaveInSeconds: 3
-      - waveData:
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        spawnSubWaveInSeconds: 6
-      - waveData:
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
-        spawnSubWaveInSeconds: 4
-      possibleEvents: []
-      eventChances: 0
+    npcDeck:
+    - {fileID: 11400000, guid: d8de3ced2b6fb5f459702223d1232fbe, type: 2}
+    - {fileID: 11400000, guid: d0bb59ee9f7008e4fb9fffc9ac783c64, type: 2}
+    - {fileID: 11400000, guid: 78f2e7f141a9f66439ddbfd5bdd59620, type: 2}
+    - {fileID: 11400000, guid: 57daadd66998d054db2731f2fdfdb423, type: 2}
+    - {fileID: 11400000, guid: 24893f92b2b335940b1c3a3fa7ae091f, type: 2}
+    - {fileID: 11400000, guid: cdccd6192562c4443a26e8dddd6139d8, type: 2}
+    - {fileID: 11400000, guid: 2c8eb3f55eb72d14baa4bcf9d8ffe2fd, type: 2}
+    - {fileID: 11400000, guid: 5996a617ac7755d49a71abc7fc2f041d, type: 2}
+    - {fileID: 11400000, guid: 4c4f4278a193ea04ebd3e64482194601, type: 2}
+    - {fileID: 11400000, guid: 26899bf2e6a512b42bac3b0dec971b1a, type: 2}
+    - {fileID: 11400000, guid: 2752390036030f54499bd91661b85754, type: 2}
+    - {fileID: 11400000, guid: 08a9ac0b8170c1d479b53b4ccfd49b6d, type: 2}
+    - {fileID: 11400000, guid: 049cc5dfb7767924b8071518faaa1dfd, type: 2}
+    - {fileID: 11400000, guid: d76d24428d1b52945882ba408e082423, type: 2}
+    - {fileID: 11400000, guid: fe2a539e4fb8a9b47be6bff472e80ca5, type: 2}
+    - {fileID: 11400000, guid: ba76339be045f934c9908ef2b2cef197, type: 2}
+    - {fileID: 11400000, guid: 2bedf2fdc04b85e47b763a1330c5b029, type: 2}
+    - {fileID: 11400000, guid: dca369bea5916db459183e9f21fc1ed1, type: 2}
+    - {fileID: 11400000, guid: 577a7d14f7a00334296a751f486240ca, type: 2}
+    - {fileID: 11400000, guid: cd3b4ad5cd621d548b0c6370ac23b659, type: 2}
+    - {fileID: 11400000, guid: 2484d00560f93564b80a0961872ede64, type: 2}
+    - {fileID: 11400000, guid: 53cbe3f016737e748adee77c01642288, type: 2}
+    - {fileID: 11400000, guid: 06b9c41556d678b4e8b83c3593d41555, type: 2}
+    - {fileID: 11400000, guid: d6ac77dea66701d4ba772175dfbd9873, type: 2}
+    - {fileID: 11400000, guid: 9de317db2f99a5c4f94cee3cbca8868c, type: 2}
+    - {fileID: 11400000, guid: eedf727964f1adb42b17f0ed4aee3a2b, type: 2}
+    - {fileID: 11400000, guid: bcbcfdba8f1c24e428f5d41bf773d3e5, type: 2}
+    - {fileID: 11400000, guid: e73c34e84e88a3d4eb2255b2a13023e0, type: 2}
+    - {fileID: 11400000, guid: c56e79393f829394184a65fa417d56ec, type: 2}
+    - {fileID: 11400000, guid: 1b4b70b259d6a9944afdc6e05f775866, type: 2}
     currentWave: 0
-    currentSubWave: 0
     NpcPrefab: {fileID: 1275498152413282245, guid: 5f3df09b5cde8364b82443fdbedee187, type: 3}
-    beginNewWave: 0
   state: 1
   pauseUI: {fileID: 567322250}
   mainMenuUI: {fileID: 32758648185904471}
