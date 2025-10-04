@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class EyeFollow : MonoBehaviour
+public sealed class EyeFollow : MonoBehaviour
 {
     [SerializeField] string propertyName = "_EyeOffsetPX";
     [SerializeField] int center = 64;
     [SerializeField] int halfRange = 32;
-    [SerializeField] float smoothTime = 0.15f;
+    [SerializeField] float smoothTime = 0.12f;
     [SerializeField] float radiusPixels = 200f;
     [SerializeField] bool flipX = true;
     [SerializeField] bool flipY = true;
-    [SerializeField] bool followTarget = false;
     [SerializeField] Transform target;
 
     SpriteRenderer sr;
@@ -18,21 +17,9 @@ public class EyeFollow : MonoBehaviour
     Camera cam;
     Vector2 current;
     Vector2 velocity;
+    float lagMul = 1f;
 
-    public Camera Cam => cam;
     public float RadiusPixels => radiusPixels;
-
-    public void SetFollowTarget(Transform t)
-    {
-        target = t;
-        followTarget = t != null;
-    }
-
-    public void ClearFollowTarget()
-    {
-        target = null;
-        followTarget = false;
-    }
 
     void Awake()
     {
@@ -40,32 +27,44 @@ public class EyeFollow : MonoBehaviour
         mpb = new MaterialPropertyBlock();
         cam = Camera.main;
         current = new Vector2(center, center);
+        Apply(current);
     }
 
     void Update()
     {
-        if (!sr || !cam) return;
+        if (!sr || !cam || !target) return;
 
-        Vector2 eyeScreen = cam.WorldToScreenPoint(transform.position);
-        Vector2 inputScreen;
+        Vector2 eyeSS = cam.WorldToScreenPoint(transform.position);
+        Vector2 targetSS = cam.WorldToScreenPoint(target.position);
+        Vector2 delta = targetSS - eyeSS;
 
-        if (followTarget && target)
-            inputScreen = cam.WorldToScreenPoint(target.position);
-        else
-            inputScreen = Input.mousePosition;
+        if (flipX) delta.x = -delta.x;
+        if (flipY) delta.y = -delta.y;
 
-        Vector2 delta = inputScreen - eyeScreen;
+        float m = delta.magnitude;
+        if (m > radiusPixels) delta *= radiusPixels / m;
 
-        Vector2 v = delta / Mathf.Max(1f, radiusPixels);
-        if (flipX) v.x = -v.x;
-        if (flipY) v.y = -v.y;
-        v = Vector2.ClampMagnitude(v, 1f);
+        Vector2 desired = new Vector2(
+            center + Mathf.Clamp(delta.x, -radiusPixels, radiusPixels) * (halfRange / radiusPixels),
+            center + Mathf.Clamp(delta.y, -radiusPixels, radiusPixels) * (halfRange / radiusPixels)
+        );
 
-        Vector2 targetPx = new Vector2(center, center) + v * halfRange;
-        current = Vector2.SmoothDamp(current, targetPx, ref velocity, smoothTime);
+        float st = Mathf.Max(0.0001f, smoothTime * lagMul);
+        current = new Vector2(
+            Mathf.SmoothDamp(current.x, desired.x, ref velocity.x, st),
+            Mathf.SmoothDamp(current.y, desired.y, ref velocity.y, st)
+        );
 
+        Apply(current);
+    }
+
+    void Apply(Vector2 uv)
+    {
         sr.GetPropertyBlock(mpb);
-        mpb.SetVector(propertyName, new Vector4(current.x, current.y - 10, 0f, 0f));
+        mpb.SetVector(propertyName, new Vector4(uv.x, uv.y, 0f, 0f));
         sr.SetPropertyBlock(mpb);
     }
+
+    public void SetFollowTarget(Transform t) => target = t;
+    public void SetLagMultiplier(float m) => lagMul = Mathf.Max(0.1f, m);
 }
