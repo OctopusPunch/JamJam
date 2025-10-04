@@ -1158,6 +1158,18 @@ PrefabInstance:
       value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 5660032911061802100, guid: 14df73a48a4613048ab55be52afab1e0, type: 3}
+      propertyPath: targetFoodValue
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5660032911061802100, guid: 14df73a48a4613048ab55be52afab1e0, type: 3}
+      propertyPath: targetGoldValue
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5660032911061802100, guid: 14df73a48a4613048ab55be52afab1e0, type: 3}
+      propertyPath: targetWaterValue
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5660032911061802100, guid: 14df73a48a4613048ab55be52afab1e0, type: 3}
       propertyPath: maxHappinessValue
       value: 99
       objectReference: {fileID: 0}

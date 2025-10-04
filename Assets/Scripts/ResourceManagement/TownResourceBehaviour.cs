@@ -10,7 +10,6 @@ public class TownResourceBehaviour : MonoBehaviour
 
     public int TargetFoodValue => targetFoodValue;
     public int TargetWaterValue => targetWaterValue;
-    public int TargetHungerValue => targetHungerValue;
     public int TargetGoldValue => targetGoldValue;
 
 
@@ -55,8 +54,6 @@ public class TownResourceBehaviour : MonoBehaviour
     private Image hungerMeter;
     [SerializeField]
     private TMPro.TMP_Text hungerValueDisplay;
-    [SerializeField]
-    private int targetHungerValue = 99;
     private int currentHungerValue;
 
 
@@ -77,15 +74,15 @@ public class TownResourceBehaviour : MonoBehaviour
 
     public void ResetResources()
     {
-        currentWaterValue = 0;
+        ResetWaterMeter();
 
-        currentFoodValue = 0;
+        ResetFoodMeter();
 
-        currentHungerValue = 0;
+        ResetHungerMeter();
 
-        currentGoldValue = 0;
+        ResetGoldMeter();
 
-        hungerValueDisplay.text = "0";
+        hungerValueDisplay.text = "3";
         goldValueDisplay.text = "0";
         waterValueDisplay.text = "0";
         foodValueDisplay.text = "0";
@@ -129,10 +126,6 @@ public class TownResourceBehaviour : MonoBehaviour
     public void AdjustWaterResource(int value)
     {
         currentWaterValue += value;
-        if(currentWaterValue > targetWaterValue)
-        {
-            currentWaterValue = targetWaterValue;
-        }
         if(currentWaterValue < 0)
         {
             currentWaterValue = 0;
@@ -152,10 +145,6 @@ public class TownResourceBehaviour : MonoBehaviour
     public void AdjustFoodResource(int value)
     {
         currentFoodValue += value;
-        if (currentFoodValue > targetFoodValue)
-        {
-            currentFoodValue = targetFoodValue;
-        }
         if (currentFoodValue < 0)
         {
             currentFoodValue = 0;
@@ -167,17 +156,9 @@ public class TownResourceBehaviour : MonoBehaviour
         currentFoodValue = 0;
     }
 
-    public void SetTargetHungerValue(int value)
-    {
-        targetHungerValue = value;
-    }
     public void AdjustHungerMeter(int value)
     {
         currentHungerValue += value;
-        if (currentHungerValue > targetHungerValue)
-        {
-            currentHungerValue = targetHungerValue;
-        }
         if(currentHungerValue < 0)
         {
             currentHungerValue = 0;
@@ -186,7 +167,7 @@ public class TownResourceBehaviour : MonoBehaviour
 
     public void ResetHungerMeter()
     {
-        currentHungerValue = 0;
+        currentHungerValue = 3;
     }
 
     public void SetTargetGoldValue(int value)
@@ -197,10 +178,6 @@ public class TownResourceBehaviour : MonoBehaviour
     public void AdjustGoldMeter(int value)
     {
         currentGoldValue += value;
-        if (currentGoldValue > targetGoldValue)
-        {
-            currentGoldValue = targetGoldValue;
-        }
         if(currentGoldValue < 0)
         {
             currentGoldValue = 0;

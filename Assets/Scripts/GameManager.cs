@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Numerics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -26,7 +27,9 @@ public class GameManager : MonoBehaviour
         Lose,
         Win,
         ShowNewWave,
-        ShowingWave
+        ShowingWave,
+        RunCheckScore,
+        CheckingScore
     }
 
     public GameState State => state;
@@ -64,6 +67,13 @@ public class GameManager : MonoBehaviour
     private float timeScaleDelta = 0;
     private const float deltaDuration = .35f;
     private const float targetDeltaTime = .25f;
+
+    private int perfectMatchCount = 0;
+    private int chainedPerfects = 0;
+    private BigInteger score = 0;
+    public BigInteger Score => score;
+
+    private bool isFirstWave = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -123,6 +133,13 @@ public class GameManager : MonoBehaviour
                 }
                 state = GameState.In_Game;
                 break;
+                case GameState.RunCheckScore:
+
+                state = GameState.CheckingScore;
+                break;
+                case GameState.CheckingScore:
+                CheckingScore();
+                break;
         }
     }
 
@@ -148,18 +165,18 @@ public class GameManager : MonoBehaviour
 
 
 
-        spawnSubWaveInSeconds -= Time.deltaTime;
-
         if (WaveManager.trackedNPCs.Count > 0)
         {
-            if (spawnSubWaveInSeconds > 0)
-            {
-                return;
-            }
+            return;
         }
+
+        if (!isFirstWave)
+        {
+            state = GameState.RunCheckScore;
+        }
+        isFirstWave = false;
         WaveManager.ReleaseNewSubwave();
 
-        spawnSubWaveInSeconds = WaveManager.GetCurrentSubWaveSpawnTime();
     }
 
     void GodHandSlowDown()
@@ -207,16 +224,123 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        isFirstWave = true;
         waveNumberUIShowing = true;
         mainMenuUI.SetActive(false);
 
         state = GameState.ShowingWave;
+        score = 0;
+        perfectMatchCount = 0;
+        chainedPerfects = 0;
+
         TownResourceBehaviour.Instance.ResetResources();
         WaveManager.ResetWaves();
         spawnSubWaveInSeconds = WaveManager.GetCurrentSubWaveSpawnTime();
         StartCoroutine(ShowWaveUI());
     }
 
+    void CheckingScore()
+    {
+        int applyDamage = 0;
+        int scoreMultiplier = 1;
+        perfectMatchCount = 0;
+        int addToScore = 0;
+        //water
+        if (TownResourceBehaviour.Instance.CurrentWaterValue > TownResourceBehaviour.Instance.TargetWaterValue)
+        {
+            ++applyDamage;
+        }
+        else if (TownResourceBehaviour.Instance.CurrentWaterValue < TownResourceBehaviour.Instance.TargetWaterValue * .8f)
+        {
+            ++applyDamage;
+        }
+        else if (TownResourceBehaviour.Instance.CurrentWaterValue == TownResourceBehaviour.Instance.TargetWaterValue)
+        {
+            ++perfectMatchCount;
+            scoreMultiplier += perfectMatchCount;
+            addToScore += TownResourceBehaviour.Instance.CurrentWaterValue;
+        }
+        else
+        {
+            addToScore += TownResourceBehaviour.Instance.CurrentWaterValue;
+        }
+        //end water
+
+        // Gold
+        if (TownResourceBehaviour.Instance.CurrentGoldValue > TownResourceBehaviour.Instance.TargetGoldValue)
+        {
+            ++applyDamage;
+        }
+        else if (TownResourceBehaviour.Instance.CurrentGoldValue < TownResourceBehaviour.Instance.TargetGoldValue * .8f)
+        {
+            ++applyDamage;
+        }
+        else if (TownResourceBehaviour.Instance.CurrentGoldValue == TownResourceBehaviour.Instance.TargetGoldValue)
+        {
+            ++perfectMatchCount;
+            scoreMultiplier += perfectMatchCount;
+
+            addToScore += TownResourceBehaviour.Instance.CurrentGoldValue;
+        }
+        else
+        {
+            addToScore += TownResourceBehaviour.Instance.CurrentGoldValue;
+        }
+        // End Gold
+
+        // Food
+        if (TownResourceBehaviour.Instance.CurretFoodValue > TownResourceBehaviour.Instance.TargetFoodValue)
+        {
+            ++applyDamage;
+        }
+        else if (TownResourceBehaviour.Instance.CurretFoodValue < TownResourceBehaviour.Instance.TargetFoodValue * .8f)
+        {
+            ++applyDamage;
+        }
+        else if (TownResourceBehaviour.Instance.CurretFoodValue == TownResourceBehaviour.Instance.TargetFoodValue)
+        {
+            ++perfectMatchCount;
+            scoreMultiplier += perfectMatchCount;
+            addToScore += TownResourceBehaviour.Instance.CurretFoodValue;
+        }
+        else
+        {
+            addToScore += TownResourceBehaviour.Instance.CurretFoodValue;
+        }
+        // End Food
+
+        // Tally score
+
+        if (perfectMatchCount == 3)
+        {
+            ++chainedPerfects;
+            score += (BigInteger)addToScore * (BigInteger)(chainedPerfects > 1 ? BigInteger.Pow(scoreMultiplier, chainedPerfects) : scoreMultiplier);
+        }
+        else
+        {
+            chainedPerfects = 0;
+        }
+
+
+        if (perfectMatchCount > 0)
+        {
+            score += 5000 * perfectMatchCount;
+        }
+
+        Debug.Log("Score: " + score);
+        // Check damage
+        TownResourceBehaviour.Instance.AdjustHungerMeter(-applyDamage);
+
+        if(TownResourceBehaviour.Instance.CurrentHungerValue <= 0)
+        {
+            state = GameState.Lose;
+            return;
+        }
+        state = GameState.In_Game;
+        TownResourceBehaviour.Instance.ResetGoldMeter();
+        TownResourceBehaviour.Instance.ResetFoodMeter();
+        TownResourceBehaviour.Instance.ResetWaterMeter();
+    }
 
     public void SetToWin()
     {
