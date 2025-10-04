@@ -62,7 +62,7 @@ public class NPCBehaviour : MonoBehaviour
         }
 
         Vector3 pos = transform.position;
-        pos.x += attributes.movementSpeed * (wasGodHanded ? 1.5f : 1) * Time.deltaTime;
+        pos.x += attributes.movementSpeed * (wasGodHanded ? 2.3f : 1) * Time.deltaTime;
 
         if(pos.x < targetGrid.transform.position.x)
         {
@@ -108,8 +108,7 @@ public class NPCBehaviour : MonoBehaviour
         {
             return;
         }
-        TownResourceBehaviour.Instance.AddFoodResource(attributes.foodResource);
-        TownResourceBehaviour.Instance.AddHappinessResource(wasGodHanded ? -2 : ((attributes.foodResource > 1) ? (attributes.foodResource - 1) * 1.35f : 1));
+        AdjustResources();
         gameObject.SetActive(false);
         wasGodHanded = false;
         inFeedingRange = false;
@@ -119,6 +118,41 @@ public class NPCBehaviour : MonoBehaviour
     public void SetIsHeld(bool value)
     {
         isHeld = value;
+    }
+
+    public void AdjustResources()
+    {
+        switch(attributes.resourceType1)
+        {
+            case NPCAttributes.ResourceType.Food:
+                TownResourceBehaviour.Instance.AdjustFoodResource(attributes.resourceAmount1);
+                break;
+            case NPCAttributes.ResourceType.Water:
+                TownResourceBehaviour.Instance.AdjustWaterResource(attributes.resourceAmount1);
+                break;
+            case NPCAttributes.ResourceType.Gold:
+                TownResourceBehaviour.Instance.AdjustGoldMeter(attributes.resourceAmount1);
+                break;
+            default:
+            case NPCAttributes.ResourceType.None:
+                break;
+        }
+
+        switch(attributes.resourceType2)
+        {
+            case NPCAttributes.ResourceType.Food:
+                TownResourceBehaviour.Instance.AdjustFoodResource(attributes.resourceAmount2);
+                break;
+            case NPCAttributes.ResourceType.Water:
+                TownResourceBehaviour.Instance.AdjustWaterResource(attributes.resourceAmount2);
+                break;
+            case NPCAttributes.ResourceType.Gold:
+                TownResourceBehaviour.Instance.AdjustGoldMeter(attributes.resourceAmount2);
+                break;
+            default:
+            case NPCAttributes.ResourceType.None:
+                break;
+        }
     }
 
     public void SetAttribute(NPCAttributes attributes)
@@ -165,8 +199,14 @@ public class NPCBehaviour : MonoBehaviour
         if (inFeedingRange)
         {
             ScreenShake.Instance.TriggerShake(.2f, .35f);
-            TownResourceBehaviour.Instance.AddToHungerMeter(attributes.foodResource + Random.Range(1, 3));
-            TownResourceBehaviour.Instance.UseHappinessResource((attributes.foodResource - 1) * 1.55f);
+            if (attributes.resourceType1 != NPCAttributes.ResourceType.None)
+            {
+                TownResourceBehaviour.Instance.AdjustHungerMeter(attributes.resourceAmount1);
+            }
+            if (attributes.resourceType2 != NPCAttributes.ResourceType.None)
+            {
+                TownResourceBehaviour.Instance.AdjustHungerMeter(attributes.resourceAmount2);
+            }
             gameObject.SetActive(false);
             wasGodHanded = false;
             inFeedingRange = false;
@@ -226,7 +266,7 @@ public class NPCBehaviour : MonoBehaviour
 
     void SetResource()
     {
-        resourceCountText.text = "Food: " + attributes.foodResource.ToString();
+        resourceCountText.text = attributes.GetResourceInfo();
     }
 
     void ShowReseource()
