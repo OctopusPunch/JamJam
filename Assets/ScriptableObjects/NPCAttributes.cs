@@ -12,7 +12,7 @@ public class NPCAttributes : ScriptableObject
     }
 
 
-    public float movementSpeed = 1;
+    public float movementSpeed = .5f;
 
     public ResourceType resourceType1 = ResourceType.None;
     public int resourceAmount1 = 0;
