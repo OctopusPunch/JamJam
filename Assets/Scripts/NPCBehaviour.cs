@@ -205,6 +205,7 @@ public class NPCBehaviour : MonoBehaviour
 
         previousPosition = transform.position;
         GameManager.Instance.SetGodHandActive(true);
+        EyeAnimationController.Instance.TriggerGrab();
         SoundManager.Instance.Play("NPC_Grab");
         SoundManager.Instance.Play("HeartBeat");
         EyeManager.Instance.SetTarget(transform);
@@ -225,12 +226,14 @@ public class NPCBehaviour : MonoBehaviour
             wasGodHanded = false;
             inFeedingRange = false;
             SoundManager.Instance.Play("Eat");
+            EyeAnimationController.Instance.Eat();
             GameManager.Instance.WaveManager.RemoveIfTracked(this.gameObject);
             GameManager.Instance.WaveManager.CheckTrackedAllMatchTargets();
         }
         else
         {
             SoundManager.Instance.Play("NPC_Drop");
+            EyeAnimationController.Instance.Close();
             transform.position = previousPosition;
         }
 

@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 1727659327813890844}
   - component: {fileID: 3910519347631944219}
   - component: {fileID: 7083596718197118633}
+  - component: {fileID: 8590574072386388595}
   m_Layer: 0
   m_Name: Eye
   m_TagString: Untagged
@@ -151,6 +152,7 @@ MonoBehaviour:
   followLag: 0.01
   bobTextureLagTime: 0.01
   bobTextureInfluence: 0.1
+  centerHoldDuration: 1
 --- !u!114 &3910519347631944219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +188,19 @@ MonoBehaviour:
   frequency: 0.8
   smoothTime: 0.12
   useUnscaledTime: 1
+--- !u!114 &8590574072386388595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4251090250969949631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff6045b34372ed4a8a6220948c5a097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EyeAnimationController
+  eyeAnimator: {fileID: 7027192385593504599}
 --- !u!1 &4429237399794318526
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,6 +425,7 @@ GameObject:
   - component: {fileID: 1864337211272340565}
   - component: {fileID: 4215999850999785605}
   - component: {fileID: 1291050809700935995}
+  - component: {fileID: 7027192385593504599}
   m_Layer: 6
   m_Name: EyeRender
   m_TagString: Untagged
@@ -503,13 +519,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EyeFollowMouse
   propertyName: _EyeOffsetPX
-  center: 64
-  halfRange: 32
+  center: 0
+  halfRange: 64
   smoothTime: 1
-  radiusPixels: 128
+  radiusPixels: 256
   flipX: 1
   flipY: 1
   target: {fileID: 0}
+  useUnscaledTime: 1
+  maxSpeed: Infinity
+--- !u!114 &7027192385593504599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5994643558210826491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63c136e3d05b18a44ada1998b54de43d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EyeAnimator
+  animationSet: {fileID: 11400000, guid: 47e0597bfad705147ac57f5d04453b94, type: 2}
+  startState: 0
+  playOnAwake: 1
+  OnStateStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStateFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6427493141726253026
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,25 +1,34 @@
+using System.Collections;
 using UnityEngine;
 
 public sealed class EyeManager : MonoBehaviour
 {
     public static EyeManager Instance { get; private set; }
-    public enum State { Wander, Follow }
 
+    public enum State { Wander, Follow, CenterHold }
+
+    [Header("References")]
     [SerializeField] EyeFollow eye;
     [SerializeField] EyeBob bob;
     [SerializeField] Transform eyeHolder;
-
-    [SerializeField] Vector2 wanderRetargetInterval = new Vector2(0.8f, 1.8f);
-    [SerializeField] float bottomBias = 0.6f;
-    [SerializeField] float wanderEdgeClamp = 0.95f;
     [SerializeField] Transform followTarget;
     [SerializeField] Camera cam;
 
+    [Header("Wander Settings")]
+    [SerializeField] Vector2 wanderRetargetInterval = new Vector2(0.8f, 1.8f);
+    [SerializeField] float bottomBias = 0.6f;
+    [SerializeField] float wanderEdgeClamp = 0.95f;
+
+    [Header("Lags")]
     [SerializeField] float wanderLag = 1.6f;
     [SerializeField] float followLag = 1.0f;
 
+    [Header("Bob Influence")]
     [SerializeField] float bobTextureLagTime = 0.18f;
     [SerializeField] float bobTextureInfluence = 1.0f;
+
+    [Header("Center Hold")]
+    [SerializeField] float centerHoldDuration = 1.5f;
 
     Transform ghost;
     Vector2 desiredV;
@@ -28,6 +37,7 @@ public sealed class EyeManager : MonoBehaviour
 
     Vector3 bobLagPos;
     Vector3 bobLagVel;
+    Coroutine centerHoldRoutine;
 
     void Awake()
     {
@@ -46,8 +56,10 @@ public sealed class EyeManager : MonoBehaviour
 
         EnterWander();
 
-        if (followTarget) SetTarget(followTarget);
-        else eye.SetFollowTarget(ghost);
+        if (followTarget)
+            SetTarget(followTarget);
+        else
+            eye.SetFollowTarget(ghost);
     }
 
     void OnDestroy()
@@ -60,8 +72,19 @@ public sealed class EyeManager : MonoBehaviour
     {
         if (state == State.Follow)
         {
-            if (!followTarget) { EnterWander(); return; }
+            if (!followTarget)
+            {
+                ClearTarget();
+                return;
+            }
+
             eye.SetFollowTarget(followTarget);
+            return;
+        }
+
+        if (state == State.CenterHold)
+        {
+            eye.SetFollowTarget(ghost);
             return;
         }
 
@@ -91,8 +114,15 @@ public sealed class EyeManager : MonoBehaviour
 
     public void SetTarget(Transform t)
     {
+        CancelCenterHold();
         followTarget = t;
-        if (!followTarget) { EnterWander(); return; }
+
+        if (!followTarget)
+        {
+            ClearTarget();
+            return;
+        }
+
         state = State.Follow;
         if (bob) bob.enabled = false;
         eye.SetLagMultiplier(followLag);
@@ -102,11 +132,15 @@ public sealed class EyeManager : MonoBehaviour
     public void ClearTarget()
     {
         followTarget = null;
-        EnterWander();
+
+        CancelCenterHold();
+        centerHoldRoutine = StartCoroutine(CenterHoldAndWander());
     }
 
     void EnterWander()
     {
+        CancelCenterHold();
+
         state = State.Wander;
         desiredV = NextWanderV(bottomBias, wanderEdgeClamp);
         nextRetargetAt = Time.time + Random.Range(wanderRetargetInterval.x, wanderRetargetInterval.y);
@@ -127,6 +161,42 @@ public sealed class EyeManager : MonoBehaviour
         eye.SetLagMultiplier(wanderLag);
         eye.SetFollowTarget(ghost);
     }
+    IEnumerator CenterHoldAndWander()
+    {
+        state = State.CenterHold;
+
+        if (cam && eye)
+        {
+            Vector3 eyeWS = eye.transform.position;
+            Vector3 eyeSS = cam.WorldToScreenPoint(eyeWS);
+            Vector3 centerSS = new Vector3(eyeSS.x, eyeSS.y, eyeSS.z);
+            Vector3 centerWS = cam.ScreenToWorldPoint(centerSS);
+            ghost.position = centerWS;
+        }
+
+        if (bob) bob.enabled = false;
+
+        eye.SetLagMultiplier(0.1f);
+        yield return new WaitForSecondsRealtime(0.15f);
+
+        // Hold it steady
+        eye.SetLagMultiplier(0.01f);
+        yield return new WaitForSecondsRealtime(centerHoldDuration);
+
+        if (state == State.CenterHold)
+            EnterWander();
+
+        centerHoldRoutine = null;
+    }
+
+    void CancelCenterHold()
+    {
+        if (centerHoldRoutine != null)
+        {
+            StopCoroutine(centerHoldRoutine);
+            centerHoldRoutine = null;
+        }
+    }
 
     static Vector2 NextWanderV(float bottomBias, float edgeClamp)
     {
@@ -134,7 +204,8 @@ public sealed class EyeManager : MonoBehaviour
         do
         {
             v = Random.insideUnitCircle;
-            if (Random.value < bottomBias) v.y = -Mathf.Abs(v.y);
+            if (Random.value < bottomBias)
+                v.y = -Mathf.Abs(v.y);
             v *= edgeClamp;
         } while (v.sqrMagnitude < 0.01f);
         return v;

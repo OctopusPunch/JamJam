@@ -58,3 +58,13 @@ MonoBehaviour:
     loop: 1
     baseVolume: 1
     pitchVariance: 0.05
+  - name: Click1
+    clip: {fileID: 8300000, guid: ea720b93e642f8a42ab9713a7be15e0f, type: 3}
+    loop: 1
+    baseVolume: 1
+    pitchVariance: 0.05
+  - name: Click2
+    clip: {fileID: 8300000, guid: 0f825bae8d326034590fcf9f29bc7e2a, type: 3}
+    loop: 1
+    baseVolume: 1
+    pitchVariance: 0.05
