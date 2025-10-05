@@ -676,7 +676,12 @@ MonoBehaviour:
     goldPrefab: {fileID: 1275498152413282245, guid: 2880128e906adde4e895e0ffaa5b8441, type: 3}
     foodPrefab: {fileID: 1275498152413282245, guid: 0c1a0c238ccf40240a65dc8dd4d3fba6, type: 3}
     waterPrefab: {fileID: 1275498152413282245, guid: 3ebaf16cb10582b49b910554fd534fdb, type: 3}
-    resourcePoolSize: 30
+    resourcePoolSize: 20
+    normalSpeed: 0.5
+    mediumFastSpeed: 0.7
+    fastSpeed: 0.85
+    fasterSpeed: 1
+    fastestSpeed: 1.2
   state: 1
   pauseUI: {fileID: 567322250}
   mainMenuUI: {fileID: 32758648185904471}
