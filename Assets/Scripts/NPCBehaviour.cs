@@ -234,6 +234,7 @@ public class NPCBehaviour : MonoBehaviour
             return;
         }
 
+        CursorManager.Instance.SetGrab();
         previousPosition = transform.position;
         GameManager.Instance.SetGodHandActive(true);
         EyeAnimationController.Instance.TriggerGrab();
@@ -267,6 +268,7 @@ public class NPCBehaviour : MonoBehaviour
             transform.position = previousPosition;
         }
 
+        CursorManager.Instance.SetNormal();
         SoundManager.Instance.Stop("HeartBeat");
         GameManager.Instance.SetGodHandActive(false);
         EyeManager.Instance.ClearTarget();
@@ -306,25 +308,30 @@ public class NPCBehaviour : MonoBehaviour
         }
         if (perfectRunSpeed)
         {
+            CursorManager.Instance.SetNormal();
             HideResource();
             return;
         }
         if (currentGrid == null)
         {
+            CursorManager.Instance.SetNormal();
             HideResource();
             return;
         }
         if(currentGrid.GridState == LaneGrid.State.Safe)
         {
+            CursorManager.Instance.SetNormal();
             HideResource();
             return;
         }
         if(currentGrid.GridState == LaneGrid.State.NonSelectable)
         {
+            CursorManager.Instance.SetNormal();
             HideResource();
             return;
         }
         ShowReseource();
+        CursorManager.Instance.SetHover();
     }
 
     private void OnMouseExit()
@@ -341,6 +348,7 @@ public class NPCBehaviour : MonoBehaviour
         {
             return;
         }
+        CursorManager.Instance.SetNormal();
         HideResource();
     }
 
