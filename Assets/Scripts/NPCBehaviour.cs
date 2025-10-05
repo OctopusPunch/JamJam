@@ -28,7 +28,8 @@ public class NPCBehaviour : MonoBehaviour
 
     private float waitToStartMoving;
 
-    public List<GameObject> resources;
+    public Item item1;
+    public Item item2;
 
     private void OnEnable()
     {
@@ -120,20 +121,17 @@ public class NPCBehaviour : MonoBehaviour
             return;
         }
 
-        foreach(var resource in resources)
-        {
-            if(resource == null)
-            {
-                continue;
-            }
-
-            resource.GetComponent<Item>().ThrowInArc();
+        if (item1.spriteRenderer.sprite != null) 
+        { 
+            item1.ThrowInArc();
         }
 
-        resources.Clear();
+        if (item2.spriteRenderer.sprite != null) 
+        { 
+            item2.ThrowInArc();
+        }
 
         AdjustResources();
-
 
         gameObject.SetActive(false);
         wasGodHanded = false;
