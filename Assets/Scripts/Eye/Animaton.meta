@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Eye/Animaton.meta
 guid: 105cbd372911b1e4f92e30c79e4c2227
+========
+guid: 94716746a10757d47a03a4f26e955ec5
+>>>>>>>> 9e95de6266ff30156fc7ec58b2216bb51e22a687:Assets/Scripts/Sound.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
