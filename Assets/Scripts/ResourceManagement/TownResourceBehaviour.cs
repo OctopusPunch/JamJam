@@ -22,6 +22,8 @@ public class TownResourceBehaviour : MonoBehaviour
     [SerializeField]
     private TMPro.TMP_Text foodValueDisplay;
     [SerializeField]
+    private TMPro.TMP_Text foodTargetDisplay;
+    [SerializeField]
     private int targetFoodValue = 99;
     private int currentFoodValue;
 
@@ -33,6 +35,8 @@ public class TownResourceBehaviour : MonoBehaviour
     [SerializeField]
     private TMPro.TMP_Text waterValueDisplay;
     [SerializeField]
+    private TMPro.TMP_Text waterTargetDisplay;
+    [SerializeField]
     private int targetWaterValue = 99;
     private int currentWaterValue;
 
@@ -43,6 +47,8 @@ public class TownResourceBehaviour : MonoBehaviour
     private Image goldMeter;
     [SerializeField]
     private TMPro.TMP_Text goldValueDisplay;
+    [SerializeField]
+    private TMPro.TMP_Text goldTargetDisplay;
     [SerializeField]
     private int targetGoldValue = 99;
     private int currentGoldValue;
@@ -85,6 +91,13 @@ public class TownResourceBehaviour : MonoBehaviour
 
         ResetGoldMeter();
 
+
+
+        targetFoodValue = 5;
+        targetGoldValue = 5;
+        targetWaterValue = 5;
+
+        SetTargetText();
         hungerValueDisplay.text = "3";
         goldValueDisplay.text = "0";
         waterValueDisplay.text = "0";
@@ -111,6 +124,13 @@ public class TownResourceBehaviour : MonoBehaviour
 
         canvas.alpha = 1.0f;
         SetDisplayText();
+    }
+
+    public void SetTargetText()
+    {
+        foodTargetDisplay.text = TargetFoodValue.ToString();
+        goldTargetDisplay.text = TargetGoldValue.ToString();
+        waterTargetDisplay.text = TargetWaterValue.ToString();
     }
 
     void SetDisplayText()
