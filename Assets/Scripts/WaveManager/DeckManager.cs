@@ -108,10 +108,10 @@ public class DeckManager
     public void AddRandomness(List<NPCAttributes> list)
     {
         GenerateRandomSingle(list, (NPCAttributes.ResourceType)Random.Range(0, 3));
-        GenerateRandomSingle(list, (NPCAttributes.ResourceType)Random.Range(0, 3));
         // Max NPCs 5
         if (currentWave < 4)
         {
+            GenerateRandomSingle(list, (NPCAttributes.ResourceType)Random.Range(0, 3));
             return;
         }
 

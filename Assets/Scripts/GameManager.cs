@@ -29,7 +29,8 @@ public class GameManager : MonoBehaviour
         ShowNewWave,
         ShowingWave,
         RunCheckScore,
-        CheckingScore
+        CheckingScore,
+        PerfectDisplay
     }
 
     public GameState State => state;
@@ -53,7 +54,10 @@ public class GameManager : MonoBehaviour
     private GameObject winUI;
     [SerializeField]
     private GameObject loseUI;
-
+    [SerializeField]
+    private GameObject perfectUI;
+    [SerializeField]
+    TextMeshProUGUI perfectUIBonusScoreText;
 
     // in game stuffs
     private float spawnSubWaveInSeconds;
@@ -68,12 +72,14 @@ public class GameManager : MonoBehaviour
     private int chainedPerfects = 0;
     private BigInteger score = 0;
     public BigInteger Score => score;
+    BigInteger addToScore = 0;
 
     private bool isFirstWave = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
+        Application.targetFrameRate = 60;
         state = GameState.MainMenu;
         instance = this;
         DontDestroyOnLoad(gameObject);
@@ -83,6 +89,7 @@ public class GameManager : MonoBehaviour
         settingsUI.SetActive(false);
         PauseButton.SetActive(false);
         mainMenuUI.SetActive(false);
+        perfectUI.SetActive(false);
         WaveManager.Initialise();
 
         StartCoroutine(WaitForSceneFinishLoadingAndShowMainMenuAsync("InGameScene"));
@@ -135,6 +142,8 @@ public class GameManager : MonoBehaviour
                 break;
                 case GameState.CheckingScore:
                 CheckingScore();
+                break;
+            case GameState.PerfectDisplay:
                 break;
         }
     }
@@ -193,6 +202,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(waveUI);
         DontDestroyOnLoad(winUI);
         DontDestroyOnLoad(loseUI);
+        DontDestroyOnLoad(perfectUI);
     }
 
     public void SetGodHandActive(bool value)
@@ -219,10 +229,10 @@ public class GameManager : MonoBehaviour
 
     void CheckingScore()
     {
+        addToScore = 0;
         int applyDamage = 0;
         int scoreMultiplier = 1;
         perfectMatchCount = 0;
-        int addToScore = 0;
         //water
         if (TownResourceBehaviour.Instance.CurrentWaterValue > TownResourceBehaviour.Instance.TargetWaterValue)
         {
@@ -292,7 +302,7 @@ public class GameManager : MonoBehaviour
         if (perfectMatchCount == 3)
         {
             ++chainedPerfects;
-            score += (BigInteger)addToScore * (BigInteger)(chainedPerfects > 1 ? BigInteger.Pow(scoreMultiplier, chainedPerfects) : scoreMultiplier);
+            addToScore = (BigInteger)addToScore * (BigInteger)(chainedPerfects >= 1 ? BigInteger.Pow(scoreMultiplier, chainedPerfects + 1) : scoreMultiplier);
         }
         else
         {
@@ -302,7 +312,7 @@ public class GameManager : MonoBehaviour
 
         if (perfectMatchCount > 0)
         {
-            score += 5000 * perfectMatchCount;
+            addToScore += 5000 * perfectMatchCount;
         }
 
         // Check damage
@@ -313,10 +323,15 @@ public class GameManager : MonoBehaviour
             state = GameState.Lose;
             return;
         }
-        state = GameState.In_Game;
-        TownResourceBehaviour.Instance.ResetGoldMeter();
-        TownResourceBehaviour.Instance.ResetFoodMeter();
-        TownResourceBehaviour.Instance.ResetWaterMeter();
+
+        if(perfectMatchCount == 3)
+        {
+            StartCoroutine(ShowPerfectUI());
+            state = GameState.PerfectDisplay;
+            return;
+        }
+        score += addToScore;
+
     }
 
     public void SetToWin()
@@ -430,7 +445,119 @@ public class GameManager : MonoBehaviour
         waveNumberUIShowing = false;
         waveUI.SetActive(false);
     }
+    IEnumerator ShowPerfectUI()
+    {
+        perfectUIBonusScoreText.text = "0";
+        perfectUI.GetComponent<CanvasGroup>().alpha = 0;
+        perfectUI.SetActive(true);
 
+        float waitForSeconds = 3f;
+        float delta = 0;
+        delta += Time.unscaledDeltaTime;
+        while(delta < 0.65f)
+        {
+            perfectUI.GetComponent<CanvasGroup>().alpha = delta/.65f;
+            yield return null;
+            delta += Time.unscaledDeltaTime;
+        }
+        perfectUI.GetComponent<CanvasGroup>().alpha = 1;
+
+
+        yield return ShowScoreAdditionJuice();
+        while (waitForSeconds > 0)
+        {
+            waitForSeconds -= Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+
+
+
+
+
+        delta = .65f;
+        delta -= Time.unscaledDeltaTime;
+        while (delta > 0)
+        {
+            perfectUI.GetComponent<CanvasGroup>().alpha = delta / .65f;
+            yield return null;
+            delta -= Time.unscaledDeltaTime;
+        }
+
+        perfectUI.GetComponent<CanvasGroup>().alpha = 0;
+        perfectUI.SetActive(false);
+
+
+        state = GameState.In_Game;
+        TownResourceBehaviour.Instance.ResetGoldMeter();
+        TownResourceBehaviour.Instance.ResetFoodMeter();
+        TownResourceBehaviour.Instance.ResetWaterMeter();
+    }
+
+    IEnumerator ShowScoreAdditionJuice()
+    {
+        perfectUIBonusScoreText.transform.localScale = UnityEngine.Vector3.one;
+        perfectUIBonusScoreText.text = "0";
+        score += addToScore;
+        BigInteger chaser = BigInteger.Zero;
+
+        UnityEngine.Vector3 baseScale = UnityEngine.Vector3.one;
+        UnityEngine.Vector3 punchScale = baseScale * 2f;
+
+        BigInteger lastMilestone = 0;
+
+        int growthCount = 1;
+
+        while (chaser != addToScore)
+        {
+            BigInteger difference = addToScore - chaser;
+            if (difference != 0)
+            {
+                BigInteger step = difference / 10 * growthCount;
+                if (step == 0) step = difference > 0 ? 1 : -1;
+                chaser += step;
+            }
+
+            BigInteger[] milestones = { 10_000, 100_000, 1_000_000, 10_000_000 };
+            foreach (var m in milestones)
+            {
+                if (chaser >= m && lastMilestone < m)
+                {
+                    lastMilestone = m;
+
+                    perfectUIBonusScoreText.text = chaser.ToString("N0");
+                    // PlaySFX("ScorePop");
+                    StartCoroutine(BounceText(perfectUIBonusScoreText.transform, punchScale, baseScale));
+                    ++growthCount;
+
+                }
+            }
+
+            perfectUIBonusScoreText.text = chaser.ToString("N0");
+            yield return null;
+        }
+
+        perfectUIBonusScoreText.text = chaser.ToString("N0");
+    }
+    IEnumerator BounceText(Transform t, UnityEngine.Vector3 big, UnityEngine.Vector3 small)
+    {
+        UnityEngine.Vector3 baseScale = t.localScale;
+        float nextBaseScale = Mathf.Min(baseScale.x * 1.05f, 3f);
+        UnityEngine.Vector3 targetBaseScale = UnityEngine.Vector3.one * nextBaseScale;
+
+        UnityEngine.Vector3 punchScale = targetBaseScale * 1.3f;
+
+        float tLerp = 0f;
+        while (tLerp < 1f)
+        {
+            tLerp += Time.unscaledDeltaTime * 3;
+            float ease = 1f - Mathf.Pow(1f - tLerp, 3f);
+            t.localScale = UnityEngine.Vector3.Lerp(punchScale, targetBaseScale, ease);
+            yield return null;
+        }
+
+        t.localScale = targetBaseScale;
+    }
     public static float CubicEaseOut(float delta, float start, float end)
     {
         delta--;
