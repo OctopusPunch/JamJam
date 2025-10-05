@@ -153,11 +153,13 @@ public class TownResourceBehaviour : MonoBehaviour
         {
             currentWaterValue = 0;
         }
+        waterMeter.fillAmount = (float)currentWaterValue / (float)targetWaterValue;
     }
 
     public void ResetWaterMeter()
     {
         currentWaterValue = 0;
+        waterMeter.fillAmount = 0;
     }
 
 
@@ -172,11 +174,13 @@ public class TownResourceBehaviour : MonoBehaviour
         {
             currentFoodValue = 0;
         }
+        foodMeter.fillAmount = (float)currentFoodValue / (float)targetFoodValue;
     }
 
     public void ResetFoodMeter()
     {
         currentFoodValue = 0;
+        foodMeter.fillAmount = 0;
     }
 
     public void AdjustHungerMeter(int value)
@@ -186,11 +190,13 @@ public class TownResourceBehaviour : MonoBehaviour
         {
             currentHungerValue = 0;
         }
+        hungerMeter.fillAmount = (float)currentHungerValue / 3;
     }
 
     public void ResetHungerMeter()
     {
         currentHungerValue = 3;
+        hungerMeter.fillAmount = 1;
     }
 
     public void SetTargetGoldValue(int value)
@@ -205,10 +211,12 @@ public class TownResourceBehaviour : MonoBehaviour
         {
             currentGoldValue = 0;
         }
+        goldMeter.fillAmount = (float)currentGoldValue / (float)targetGoldValue;
     }
 
     public void ResetGoldMeter()
     {
         currentGoldValue = 0;
+        goldMeter.fillAmount = 0;
     }
 }
