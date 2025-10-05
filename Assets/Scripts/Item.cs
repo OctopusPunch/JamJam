@@ -7,7 +7,7 @@ public class Item : MonoBehaviour
     float arcHeight;
     float arcDuration;
 
-    Vector3 target = new Vector3(8.75f, -0.75f, 0);
+    Vector3 target = new Vector3(9.044f, -0.328f, 0);
 
     public SpriteRenderer spriteRenderer;
 
@@ -75,5 +75,6 @@ public class Item : MonoBehaviour
         spriteRenderer.sprite = null;
         transform.parent = originalParent;
         transform.localPosition = originalLocalPosition;
+        TownResourceBehaviour.Instance.chestAnimator.PlayAnimation();
     }
 }

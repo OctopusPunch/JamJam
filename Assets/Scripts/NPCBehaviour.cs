@@ -31,6 +31,8 @@ public class NPCBehaviour : MonoBehaviour
     public Item item1;
     public Item item2;
 
+    public SimpleAnimationEnumerator boxAnimator;
+
     private void OnEnable()
     {
         perfectRunSpeed = false;

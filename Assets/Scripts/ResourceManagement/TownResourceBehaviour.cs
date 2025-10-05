@@ -60,6 +60,9 @@ public class TownResourceBehaviour : MonoBehaviour
     [SerializeField]
     CanvasGroup canvas;
 
+    public SimpleAnimationEnumerator bellringerAnimator;
+    public SimpleAnimationEnumerator chestAnimator;
+
     void Awake()
     {
         canvas.alpha = 0;
