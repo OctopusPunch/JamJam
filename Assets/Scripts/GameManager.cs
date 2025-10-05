@@ -54,10 +54,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject loseUI;
 
-    [Header("Wave UI")]
-    [SerializeField]
-    private TextMeshProUGUI waveUIWaveNumber;
-
 
     // in game stuffs
     private float spawnSubWaveInSeconds;
@@ -403,19 +399,34 @@ public class GameManager : MonoBehaviour
 
     IEnumerator ShowWaveUI()
     {
-        waveUIWaveNumber.text = (1 + WaveManager.currentWave).ToString();
-
+        waveUI.GetComponent<CanvasGroup>().alpha = 0;
         waveUI.SetActive(true);
 
-        float waitForSeconds = 3;
-
-
-        while(waitForSeconds > 0)
+        float waitForSeconds = 3f;
+        float delta = 0;
+        delta += Time.unscaledDeltaTime;
+        while(delta < 0.65f)
+        {
+            waveUI.GetComponent<CanvasGroup>().alpha = delta/.65f;
+            yield return null;
+            delta += Time.unscaledDeltaTime;
+        }
+        waveUI.GetComponent<CanvasGroup>().alpha = 1;
+        while (waitForSeconds > 0)
         {
             waitForSeconds -= Time.unscaledDeltaTime;
             yield return null;
         }
+        delta = .65f;
+        delta -= Time.unscaledDeltaTime;
+        while (delta > 0)
+        {
+            waveUI.GetComponent<CanvasGroup>().alpha = delta / .65f;
+            yield return null;
+            delta -= Time.unscaledDeltaTime;
+        }
 
+        waveUI.GetComponent<CanvasGroup>().alpha = 0;
         waveNumberUIShowing = false;
         waveUI.SetActive(false);
     }
