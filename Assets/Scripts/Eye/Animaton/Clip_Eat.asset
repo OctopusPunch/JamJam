@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EyeAnimClip
   state: 3
   source: 1
-  framesArray: {fileID: 18700000, guid: 262e08e176850744bbdca5135d511dce, type: 3}
+  framesArray: {fileID: 18700000, guid: 04f50102775b12b4f991e4cfefa42192, type: 3}
   frames: []
   frameCountOverride: 9
   fps: 12
