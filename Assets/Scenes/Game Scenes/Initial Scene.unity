@@ -640,6 +640,7 @@ GameObject:
   m_Component:
   - component: {fileID: 586554365}
   - component: {fileID: 586554364}
+  - component: {fileID: 586554366}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -698,6 +699,28 @@ Transform:
   - {fileID: 538857710}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &586554366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586554363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf24795ff07e41429faa7e8d890e31d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorManager
+  normalTexture: {fileID: 2800000, guid: 6da7385545d720244ba32d57ac53d6e2, type: 3}
+  normalHotspot: {x: 0, y: 0}
+  normalMode: 0
+  hoverTexture: {fileID: 2800000, guid: d82ed9c30f5aecc45ac1be0523b00aa3, type: 3}
+  hoverHotspot: {x: 0, y: 0}
+  hoverMode: 0
+  grabTexture: {fileID: 2800000, guid: 9d538ce2ba4719849badf5a3fba7fed3, type: 3}
+  grabHotspot: {x: 8, y: 5}
+  grabMode: 0
+  initialState: 0
 --- !u!1 &645189811
 GameObject:
   m_ObjectHideFlags: 0

@@ -417,7 +417,7 @@ public class GameManager : MonoBehaviour
         waveUI.GetComponent<CanvasGroup>().alpha = 0;
         waveUI.SetActive(true);
 
-        float waitForSeconds = 3f;
+        float waitForSeconds = 8f;
         float delta = 0;
         delta += Time.unscaledDeltaTime;
         while(delta < 0.65f)
