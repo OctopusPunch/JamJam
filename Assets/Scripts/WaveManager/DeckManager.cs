@@ -490,6 +490,7 @@ public class DeckManager
         {
             obj.GetComponent<NPCBehaviour>().PerfectRun();
         }
+        GameManager.Instance.perfectRun = true;
     }
 
     public float GetSpeed()

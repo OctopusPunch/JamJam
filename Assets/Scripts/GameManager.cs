@@ -58,6 +58,8 @@ public class GameManager : MonoBehaviour
     private GameObject perfectUI;
     [SerializeField]
     TextMeshProUGUI perfectUIBonusScoreText;
+    [SerializeField]
+    TextMeshProUGUI perfectUITimeBonusScoreText;
 
     // in game stuffs
     private float spawnSubWaveInSeconds;
@@ -75,6 +77,11 @@ public class GameManager : MonoBehaviour
     BigInteger addToScore = 0;
 
     private bool isFirstWave = false;
+
+    private float scoreDivider = 1f;
+    private float showAsMultiplier;
+
+    public bool perfectRun = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -110,6 +117,7 @@ public class GameManager : MonoBehaviour
                 return;
 
             case GameState.MainMenu:
+                perfectRun = false;
                 return;
 
             case GameState.In_Game:
@@ -117,13 +125,16 @@ public class GameManager : MonoBehaviour
                 return;
 
             case GameState.Lose:
+                perfectRun = false;
                 loseUI.SetActive(true);
                 return;
 
             case GameState.Win:
+                perfectRun = false;
                 winUI.SetActive(true);
                 return;
             case GameState.ShowNewWave:
+                perfectRun = false;
                 StartCoroutine(ShowWaveUI());
                 waveNumberUIShowing = true;
 
@@ -137,7 +148,7 @@ public class GameManager : MonoBehaviour
                 state = GameState.In_Game;
                 break;
                 case GameState.RunCheckScore:
-
+                perfectRun = false;
                 state = GameState.CheckingScore;
                 break;
                 case GameState.CheckingScore:
@@ -152,9 +163,13 @@ public class GameManager : MonoBehaviour
     {
         GodHandSlowDown();
 
-
         if (WaveManager.trackedNPCs.Count > 0)
         {
+            if(perfectRun)
+            {
+                return;
+            }
+            scoreDivider -= Time.unscaledDeltaTime * .016f;
             return;
         }
 
@@ -229,6 +244,12 @@ public class GameManager : MonoBehaviour
 
     void CheckingScore()
     {
+        if(scoreDivider < 0.05f)
+        {
+            scoreDivider = 0.05f;
+        }
+        showAsMultiplier = 1 + scoreDivider;
+        perfectUITimeBonusScoreText.text = "Time Bonus: " + showAsMultiplier.ToString("N2") + "%";
         addToScore = 0;
         int applyDamage = 0;
         int scoreMultiplier = 1;
@@ -326,12 +347,21 @@ public class GameManager : MonoBehaviour
 
         if(perfectMatchCount == 3)
         {
+            addToScore = PercentOf(addToScore, (decimal)scoreDivider);
+            scoreDivider = 1f;
             StartCoroutine(ShowPerfectUI());
             state = GameState.PerfectDisplay;
             return;
         }
+        scoreDivider = 1f;
         score += addToScore;
 
+    }
+    BigInteger PercentOf(BigInteger value, decimal multiplier, int precision = 10000)
+    {
+        // Convert multiplier to scaled integer
+        BigInteger scaled = (BigInteger)(multiplier * precision);
+        return (value * scaled) / precision;
     }
 
     public void SetToWin()
