@@ -238,7 +238,6 @@ public class NPCBehaviour : MonoBehaviour
 
         if (inFeedingRange)
         {
-            ScreenShake.Instance.TriggerShake(.2f, .35f);
             gameObject.SetActive(false);
             wasGodHanded = false;
             inFeedingRange = false;

@@ -35,6 +35,10 @@ public sealed class EyeAnimationController : MonoBehaviour
     public void Idle() => Play(EyeState.Idle);
     public void TriggerGrab() => Play(EyeState.TriggerGrab);
     public void Grabbed() => Play(EyeState.Grabbed);
-    public void Eat() => Play(EyeState.Eat);
+    public void Eat()
+    {
+        Play(EyeState.Eat);
+        StartCoroutine(ScreenShake.Instance.TriggerShakeAfterSeconds(.25f, .35f, .5f));
+    }
     public void Close() => Play(EyeState.Close);
 }
