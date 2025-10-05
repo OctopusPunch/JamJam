@@ -104,6 +104,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
   spriteRenderer: {fileID: 3074720690583938090}
-  foodSprite: {fileID: -861113222, guid: 69fa13ce4d6d45749be71ce78d712fff, type: 3}
-  waterSprite: {fileID: 3601462928585118538, guid: 69fa13ce4d6d45749be71ce78d712fff, type: 3}
-  moneySprite: {fileID: -251408926, guid: 69fa13ce4d6d45749be71ce78d712fff, type: 3}
+  foodSprite: {fileID: 4301667646457655742, guid: a272184492b620743b595c808d1fed0a, type: 3}
+  waterSprite: {fileID: -8366666186889716353, guid: a272184492b620743b595c808d1fed0a, type: 3}
+  moneySprite: {fileID: -3957725543061422136, guid: a272184492b620743b595c808d1fed0a, type: 3}

@@ -62,6 +62,7 @@ public class DeckManager
         Shuffle(pulledSolution);
         SpawnWave(pulledSolution);
         pulledSolution.Clear();
+        TownResourceBehaviour.Instance.bellringerAnimator.PlayAnimation();
     }
 
     public void Shuffle(List<NPCAttributes> list)
