@@ -4966,7 +4966,7 @@ MonoBehaviour:
   - {fileID: -1278320452, guid: 4eb4e269b13543440b98432d7fd7f7ea, type: 3}
   - {fileID: -177121969, guid: 4eb4e269b13543440b98432d7fd7f7ea, type: 3}
   - {fileID: 2093759450, guid: 4eb4e269b13543440b98432d7fd7f7ea, type: 3}
-  fps: 10
+  fps: 5
 --- !u!61 &7539710013426921285
 BoxCollider2D:
   m_ObjectHideFlags: 0
