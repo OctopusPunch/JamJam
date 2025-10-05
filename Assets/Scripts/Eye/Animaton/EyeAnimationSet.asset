@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c642214df073f5b4e8079103c20f25d2, type: 3}
+  m_Name: EyeAnimationSet
+  m_EditorClassIdentifier: Assembly-CSharp::EyeAnimationSet
+  clips:
+  - {fileID: 11400000, guid: e7e0b734b0e2bed41a774b095ef46969, type: 2}
+  - {fileID: 11400000, guid: 8d1489593edeeee4391054a9036bdcab, type: 2}
+  - {fileID: 11400000, guid: 4fcdfcf50fa08c844a3a15f2023f0dea, type: 2}
+  - {fileID: 11400000, guid: 91a2c46ea77f6974ba96b70a119e1a53, type: 2}
+  - {fileID: 11400000, guid: 01f69a084ebe0984dbd2ac65c0cdda09, type: 2}
