@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367c6491c36897c49bc6956b1bd2c59a, type: 3}
+  m_Name: SoundData
+  m_EditorClassIdentifier: Assembly-CSharp::SoundDataSO
+  sounds:
+  - name: NPC_Grab
+    clip: {fileID: 8300000, guid: 6fb216f49c169a34a965acc4b23ffac2, type: 3}
+    loop: 0
+    baseVolume: 1
+    pitchVariance: 0
+  - name: NPC_Drop
+    clip: {fileID: 8300000, guid: 784bd0db2272bde48a1b43dab12165b4, type: 3}
+    loop: 0
+    baseVolume: 1
+    pitchVariance: 0
+  - name: HeartBeat
+    clip: {fileID: 8300000, guid: 773d60fcd1852f145997e3b6d96cb3b1, type: 3}
+    loop: 1
+    baseVolume: 1
+    pitchVariance: 0
+  - name: Eat
+    clip: {fileID: 8300000, guid: 3d969f83fb9fb5b4f863818088ad722d, type: 3}
+    loop: 0
+    baseVolume: 0.4
+    pitchVariance: 0.11
+  - name: Collect_Food
+    clip: {fileID: 8300000, guid: 1f4789a7bab55e340a497c9ae6c716dc, type: 3}
+    loop: 0
+    baseVolume: 0.66
+    pitchVariance: 0.08
+  - name: Collect_Water
+    clip: {fileID: 8300000, guid: d1b69be7d0b331f43ae6abff8a1ab68e, type: 3}
+    loop: 0
+    baseVolume: 0.6
+    pitchVariance: 0.171
+  - name: Collect_Gold
+    clip: {fileID: 8300000, guid: 2cab22aca13d36041823a219aed905a7, type: 3}
+    loop: 0
+    baseVolume: 0.72
+    pitchVariance: 0.16
+  - name: Step
+    clip: {fileID: 8300000, guid: d8dc7dd8af6978a4fb6bb628ce5eab76, type: 3}
+    loop: 0
+    baseVolume: 0.058
+    pitchVariance: 0.185
+  - name: Bell
+    clip: {fileID: 8300000, guid: e3fbba4cc4718224695032cd910b47f8, type: 3}
+    loop: 1
+    baseVolume: 1
+    pitchVariance: 0.05

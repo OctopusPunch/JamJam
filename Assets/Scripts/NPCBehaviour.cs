@@ -135,12 +135,15 @@ public class NPCBehaviour : MonoBehaviour
         {
             case NPCAttributes.ResourceType.Food:
                 TownResourceBehaviour.Instance.AdjustFoodResource(attributes.resourceAmount1);
+                SoundManager.Instance.Play("Collect_Food");
                 break;
             case NPCAttributes.ResourceType.Water:
                 TownResourceBehaviour.Instance.AdjustWaterResource(attributes.resourceAmount1);
+                SoundManager.Instance.Play("Collect_Water");
                 break;
             case NPCAttributes.ResourceType.Gold:
                 TownResourceBehaviour.Instance.AdjustGoldMeter(attributes.resourceAmount1);
+                SoundManager.Instance.Play("Collect_Gold");
                 break;
             default:
             case NPCAttributes.ResourceType.None:
@@ -151,12 +154,15 @@ public class NPCBehaviour : MonoBehaviour
         {
             case NPCAttributes.ResourceType.Food:
                 TownResourceBehaviour.Instance.AdjustFoodResource(attributes.resourceAmount2);
+                SoundManager.Instance.Play("Collect_Food");
                 break;
             case NPCAttributes.ResourceType.Water:
                 TownResourceBehaviour.Instance.AdjustWaterResource(attributes.resourceAmount2);
+                SoundManager.Instance.Play("Collect_Water");
                 break;
             case NPCAttributes.ResourceType.Gold:
                 TownResourceBehaviour.Instance.AdjustGoldMeter(attributes.resourceAmount2);
+                SoundManager.Instance.Play("Collect_Gold");
                 break;
             default:
             case NPCAttributes.ResourceType.None:
@@ -199,6 +205,9 @@ public class NPCBehaviour : MonoBehaviour
 
         previousPosition = transform.position;
         GameManager.Instance.SetGodHandActive(true);
+        SoundManager.Instance.Play("NPC_Grab");
+        SoundManager.Instance.Play("HeartBeat");
+        EyeManager.Instance.SetTarget(transform);
         SetIsHeld(true);
         wasGodHanded = true;
     }
@@ -215,12 +224,22 @@ public class NPCBehaviour : MonoBehaviour
             gameObject.SetActive(false);
             wasGodHanded = false;
             inFeedingRange = false;
+            SoundManager.Instance.Play("Eat");
             GameManager.Instance.WaveManager.RemoveIfTracked(this.gameObject);
             GameManager.Instance.WaveManager.CheckTrackedAllMatchTargets();
         }
+        else
+        {
+            SoundManager.Instance.Play("NPC_Drop");
+            transform.position = previousPosition;
+        }
+
+        SoundManager.Instance.Stop("HeartBeat");
         GameManager.Instance.SetGodHandActive(false);
+        EyeManager.Instance.ClearTarget();
+
         SetIsHeld(false);
-        transform.position = previousPosition;
+        
     }
 
 

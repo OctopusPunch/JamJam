@@ -11,6 +11,8 @@ public sealed class EyeFollow : MonoBehaviour
     [SerializeField] bool flipX = true;
     [SerializeField] bool flipY = true;
     [SerializeField] Transform target;
+    [SerializeField] bool useUnscaledTime = true;
+    [SerializeField] float maxSpeed = Mathf.Infinity;
 
     SpriteRenderer sr;
     MaterialPropertyBlock mpb;
@@ -49,11 +51,11 @@ public sealed class EyeFollow : MonoBehaviour
             center + Mathf.Clamp(delta.y, -radiusPixels, radiusPixels) * (halfRange / radiusPixels)
         );
 
+        float dt = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+        dt = Mathf.Min(dt, 0.05f);
+
         float st = Mathf.Max(0.0001f, smoothTime * lagMul);
-        current = new Vector2(
-            Mathf.SmoothDamp(current.x, desired.x, ref velocity.x, st),
-            Mathf.SmoothDamp(current.y, desired.y, ref velocity.y, st)
-        );
+        current = Vector2.SmoothDamp(current, desired, ref velocity, st, maxSpeed, dt);
 
         Apply(current);
     }
