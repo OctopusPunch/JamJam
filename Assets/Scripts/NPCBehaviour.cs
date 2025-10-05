@@ -13,8 +13,6 @@ public class NPCBehaviour : MonoBehaviour
     [SerializeField]
     bool isHeld;
 
-    [SerializeField]
-    private TMP_Text resourceCountText;
 
     [SerializeField]
     private LaneGrid currentGrid;
@@ -30,6 +28,24 @@ public class NPCBehaviour : MonoBehaviour
 
     public Item item1;
     public Item item2;
+
+    public GameObject ResourceCounterDisplay;
+    public Transform itemOneResourceDisplay;
+    [SerializeField]
+    private TMP_Text resourceOneCountText;
+    public Transform itemTwoResourceDisplay;
+    [SerializeField]
+    private TMP_Text resourceTwoCountText;
+
+    [SerializeField]
+    private Sprite food;
+    [SerializeField]
+    private Sprite water;
+    [SerializeField]
+    private Sprite gold;
+
+    private float posYResource1 = .17f;
+    private float posYResource2 = -.08f;
 
     private void OnEnable()
     {
@@ -334,17 +350,57 @@ public class NPCBehaviour : MonoBehaviour
         {
             return;
         }
-        resourceCountText.text = attributes.GetResourceInfo();
+        resourceOneCountText.text = "x " + attributes.resourceAmount1;
+        resourceTwoCountText.text = "x " + attributes.resourceAmount2;
+
+        if(attributes.resourceType2 != NPCAttributes.ResourceType.None)
+        {
+            Vector3 r_1 = itemOneResourceDisplay.transform.localPosition;
+            r_1.y = posYResource1;
+            itemOneResourceDisplay.transform.localPosition = r_1;
+            itemOneResourceDisplay.GetComponent<SpriteRenderer>().sprite = SetSprite(attributes.resourceType1);
+
+            Vector3 r_2 = itemTwoResourceDisplay.transform.localPosition;
+            r_2.y = posYResource2;
+            itemTwoResourceDisplay.transform.localPosition = r_2;
+            itemTwoResourceDisplay.gameObject.SetActive(true);
+
+            itemTwoResourceDisplay.GetComponent<SpriteRenderer>().sprite = SetSprite(attributes.resourceType2);
+            return;
+        }
+        Vector3 r1 = itemOneResourceDisplay.transform.localPosition;
+        r1.y = 0;
+        itemOneResourceDisplay.transform.localPosition = r1;
+        itemOneResourceDisplay.GetComponent<SpriteRenderer>().sprite = SetSprite(attributes.resourceType1);
+
+        itemTwoResourceDisplay.gameObject.SetActive(false);
+
+    }
+
+    Sprite SetSprite(NPCAttributes.ResourceType resourceType)
+    {
+        switch (resourceType)
+        {
+            case NPCAttributes.ResourceType.Food:
+                return food;
+            case NPCAttributes.ResourceType.Gold:
+                return gold;
+            case NPCAttributes.ResourceType.Water:
+                return water;
+            case NPCAttributes.ResourceType.None:
+                break;
+        }
+        return null;
     }
 
     void ShowReseource()
     {
-        resourceCountText.gameObject.SetActive(true);
+        ResourceCounterDisplay.SetActive(true);
     }
 
     void HideResource()
     {
-        resourceCountText.gameObject.SetActive(false);
+        ResourceCounterDisplay.gameObject.SetActive(false);
     }
 
     public void SetTargetGrid(LaneGrid laneGrid)
