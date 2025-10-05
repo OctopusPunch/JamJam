@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3074720690583938090}
   - component: {fileID: 5007336954621630571}
   m_Layer: 0
-  m_Name: Food
+  m_Name: Item
   m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,3 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb4d0526ecbcec44ba61fe9b569c9ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
+  spriteRenderer: {fileID: 3074720690583938090}
+  foodSprite: {fileID: -861113222, guid: 69fa13ce4d6d45749be71ce78d712fff, type: 3}
+  waterSprite: {fileID: 3601462928585118538, guid: 69fa13ce4d6d45749be71ce78d712fff, type: 3}
+  moneySprite: {fileID: -251408926, guid: 69fa13ce4d6d45749be71ce78d712fff, type: 3}
