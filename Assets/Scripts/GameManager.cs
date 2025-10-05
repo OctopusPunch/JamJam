@@ -309,7 +309,6 @@ public class GameManager : MonoBehaviour
             score += 5000 * perfectMatchCount;
         }
 
-        Debug.Log("Score: " + score);
         // Check damage
         TownResourceBehaviour.Instance.AdjustHungerMeter(-applyDamage);
 

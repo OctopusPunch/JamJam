@@ -1,12 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
+using NUnit.Framework;
 
 [System.Serializable]
 public class DeckManager
 {
-    //[SerializeField]
-    //public List<NPCAttributes> npcDeck = new List<NPCAttributes>();
-
     public int currentWave = 0;
 
     public Dictionary<string, GameObject> trackedNPCs = new Dictionary<string, GameObject>(250);
@@ -27,6 +25,11 @@ public class DeckManager
     public Queue<GameObject> WaterPool;
 
 
+    public float normalSpeed = 0.5f;
+    public float mediumFastSpeed = 0.55f;
+    public float fastSpeed = 0.6f;
+    public float fasterSpeed = 0.7f;
+    public float fastestSpeed = 0.85f;
 
     public void Initialise()
     {
@@ -437,6 +440,7 @@ public class DeckManager
             npc.SetActive(true);
 
             trackedNPCs.Add(npc.name, npc);
+            npc.GetComponent<NPCBehaviour>().Attributes.movementSpeed = GetSpeed();
 
             if (npc.GetComponent<NPCBehaviour>().Attributes.resourceType1 != NPCAttributes.ResourceType.None) 
             {
@@ -584,5 +588,59 @@ public class DeckManager
         {
             obj.GetComponent<NPCBehaviour>().PerfectRun();
         }
+    }
+
+    public float GetSpeed()
+    {
+        if (currentWave < 1)
+        {
+            return normalSpeed;
+        }
+
+        if(currentWave < 2)
+        {
+            return mediumFastSpeed;
+        }
+        if(currentWave < 4)
+        {
+            return fastSpeed;
+        }
+
+        // Max NPCs 7
+        if (currentWave < 7)
+        {
+            return normalSpeed;
+        }
+        
+        // Max NPCs 7
+        if (currentWave < 9)
+        {
+            return mediumFastSpeed;
+        }
+        
+        // Max NPCs 7
+        if (currentWave < 11)
+        {
+            return 0.6f;
+        }
+
+        // Max NPCs 8
+        if (currentWave < 12)
+        {
+            return mediumFastSpeed;
+        }
+
+        if (currentWave < 15)
+        {
+            return fastSpeed;
+        }
+
+        if(currentWave < 19)
+        {
+            return fasterSpeed;
+        }
+
+        return fastestSpeed;
+        // Max NPCs 10
     }
 }
