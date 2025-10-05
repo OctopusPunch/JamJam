@@ -10,10 +10,22 @@ public class DeckManager
     public int currentWave = 0;
 
     public Dictionary<string, GameObject> trackedNPCs = new Dictionary<string, GameObject>(250);
+    public Dictionary<string, GameObject> trackedItems = new Dictionary<string, GameObject>(250);
 
     public GameObject NpcPrefab;
 
+    public GameObject goldPrefab;
+    public GameObject foodPrefab;
+    public GameObject waterPrefab;
+
     public Queue<GameObject> npcPools = new Queue<GameObject>(25);
+
+    public int resourcePoolSize = 20;
+
+    public Queue<GameObject> GoldPool;
+    public Queue<GameObject> FoodPool;
+    public Queue<GameObject> WaterPool;
+
 
 
     public void Initialise()
@@ -29,6 +41,40 @@ public class DeckManager
             newNpc.transform.SetParent(holder.transform, false);
             newNpc.name = "NPC #" + i;
             npcPools.Enqueue(newNpc);
+        }
+
+        GameObject resourceHolder = new GameObject("#ResourceHolder");
+        MonoBehaviour.DontDestroyOnLoad(resourceHolder);
+
+        GoldPool = new Queue<GameObject>(resourcePoolSize);
+        FoodPool = new Queue<GameObject>(resourcePoolSize);
+        WaterPool = new Queue<GameObject>(resourcePoolSize);
+
+        for (int i = 0; i < resourcePoolSize; i++)
+        {
+            GameObject newGold = MonoBehaviour.Instantiate(goldPrefab);
+
+            newGold.SetActive(false);
+            newGold.transform.position = Vector3.one * -1000;
+            newGold.transform.SetParent(resourceHolder.transform, false);
+            newGold.name = "Gold #" + i;
+            GoldPool.Enqueue(newGold);
+
+            GameObject newFood = MonoBehaviour.Instantiate(foodPrefab);
+
+            newFood.SetActive(false);
+            newFood.transform.position = Vector3.one * -1000;
+            newFood.transform.SetParent(resourceHolder.transform, false);
+            newFood.name = "Food #" + i;
+            FoodPool.Enqueue(newFood);
+
+            GameObject newWater = MonoBehaviour.Instantiate(waterPrefab);
+
+            newWater.SetActive(false);
+            newWater.transform.position = Vector3.one * -1000;
+            newWater.transform.SetParent(resourceHolder.transform, false);
+            newWater.name = "Water #" + i;
+            WaterPool.Enqueue(newWater);
         }
     }
 
@@ -391,9 +437,71 @@ public class DeckManager
             npc.SetActive(true);
 
             trackedNPCs.Add(npc.name, npc);
+
+            if (npc.GetComponent<NPCBehaviour>().Attributes.resourceType1 != NPCAttributes.ResourceType.None) 
+            {
+                DequeueAndSetItem(npc.GetComponent<NPCBehaviour>().Attributes.resourceType1, npc, 0.1f, 0.1f);
+            }
+
+            if (npc.GetComponent<NPCBehaviour>().Attributes.resourceType2 != NPCAttributes.ResourceType.None) 
+            {
+                DequeueAndSetItem(npc.GetComponent<NPCBehaviour>().Attributes.resourceType2, npc, 0.2f, 0);
+            }
         }
     }
 
+    private void DequeueAndSetItem(NPCAttributes.ResourceType resourceType, GameObject npc, float xPosMod, float yPosMod) 
+    {
+        GameObject item = null;
+        if (resourceType == NPCAttributes.ResourceType.Gold)
+        {
+            item = GoldPool.Dequeue();
+        }
+        else if (resourceType == NPCAttributes.ResourceType.Food)
+        {
+            item = FoodPool.Dequeue();
+        }
+        else if (resourceType == NPCAttributes.ResourceType.Water)
+        {
+            item = WaterPool.Dequeue();
+        }
+
+        item.transform.SetParent(npc.transform, false);
+        item.transform.position = npc.transform.position;
+        item.transform.position = new Vector2(item.transform.position.x + xPosMod, item.transform.position.y - yPosMod);
+        item.SetActive(true);
+        trackedItems.Add(item.name, item);
+
+        if (npc.GetComponent<NPCBehaviour>().resources.Count >= 1) 
+        {
+            item.GetComponent<SpriteRenderer>().sortingOrder -= 1;
+        }
+
+        npc.GetComponent<NPCBehaviour>().resources.Add(item);
+
+    }
+
+    public void RemoveItemIfTracked(GameObject target)
+    {
+        if (!trackedItems.ContainsKey(target.name))
+            return;
+
+        trackedItems.Remove(target.name);
+
+        if(target.name.Contains("Gold"))
+        {
+            GoldPool.Enqueue(target);
+        }
+        else if (target.name.Contains("Food"))
+        {
+            FoodPool.Enqueue(target);
+        }
+        else if (target.name.Contains("Water"))
+        {
+            WaterPool.Enqueue(target);
+        }
+
+    }
 
     public void RemoveIfTracked(GameObject target)
     {

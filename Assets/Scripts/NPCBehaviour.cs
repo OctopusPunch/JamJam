@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -27,6 +28,7 @@ public class NPCBehaviour : MonoBehaviour
 
     private float waitToStartMoving;
 
+    public List<GameObject> resources;
 
     private void OnEnable()
     {
@@ -117,7 +119,22 @@ public class NPCBehaviour : MonoBehaviour
         {
             return;
         }
+
+        foreach(var resource in resources)
+        {
+            if(resource == null)
+            {
+                continue;
+            }
+
+            resource.GetComponent<Item>().ThrowInArc();
+        }
+
+        resources.Clear();
+
         AdjustResources();
+
+
         gameObject.SetActive(false);
         wasGodHanded = false;
         inFeedingRange = false;

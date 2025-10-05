@@ -673,6 +673,10 @@ MonoBehaviour:
   WaveManager:
     currentWave: 0
     NpcPrefab: {fileID: 1275498152413282245, guid: 5f3df09b5cde8364b82443fdbedee187, type: 3}
+    goldPrefab: {fileID: 1275498152413282245, guid: 2880128e906adde4e895e0ffaa5b8441, type: 3}
+    foodPrefab: {fileID: 1275498152413282245, guid: 0c1a0c238ccf40240a65dc8dd4d3fba6, type: 3}
+    waterPrefab: {fileID: 1275498152413282245, guid: 3ebaf16cb10582b49b910554fd534fdb, type: 3}
+    resourcePoolSize: 30
   state: 1
   pauseUI: {fileID: 567322250}
   mainMenuUI: {fileID: 32758648185904471}
