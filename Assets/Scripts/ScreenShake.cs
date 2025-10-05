@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ScreenShake : MonoBehaviour
@@ -31,6 +32,12 @@ public class ScreenShake : MonoBehaviour
 
     public void TriggerShake(float duration, float magnitude)
     {
+        shakeDuration = duration;
+        shakeMagnitude = magnitude;
+    }
+    public IEnumerator TriggerShakeAfterSeconds(float duration, float magnitude, float waitForSeconds)
+    {
+        yield return new WaitForSecondsRealtime(waitForSeconds);
         shakeDuration = duration;
         shakeMagnitude = magnitude;
     }
