@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 using static GameManager;
@@ -58,11 +60,9 @@ public class TownResourceBehaviour : MonoBehaviour
     [Space(10)]
     [Header("Monster Hunger Values")]
     [SerializeField]
-    private Image hungerMeter;
-    [SerializeField]
-    private TMPro.TMP_Text hungerValueDisplay;
     private int currentHungerValue;
-
+    [SerializeField]
+    private List<Image> hearts;
 
     [SerializeField]
     CanvasGroup canvas;
@@ -99,7 +99,10 @@ public class TownResourceBehaviour : MonoBehaviour
         targetWaterValue = 5;
 
         SetTargetText();
-        hungerValueDisplay.text = "3";
+        foreach(var img in hearts)
+        {
+            img.enabled = true;
+        }
         goldValueDisplay.text = "0";
         waterValueDisplay.text = "0";
         foodValueDisplay.text = "0";
@@ -127,6 +130,14 @@ public class TownResourceBehaviour : MonoBehaviour
         SetDisplayText();
     }
 
+    private void SetHearts()
+    {
+        for (int i = 0; i < hearts.Count; i++)
+        {
+            hearts[i].enabled = i < currentHungerValue;
+        }
+    }
+
     public void SetTargetText()
     {
         foodTargetDisplay.text = TargetFoodValue.ToString();
@@ -136,7 +147,6 @@ public class TownResourceBehaviour : MonoBehaviour
 
     void SetDisplayText()
     {
-        hungerValueDisplay.text = CurrentHungerValue.ToString();
         goldValueDisplay.text = CurrentGoldValue.ToString();
         waterValueDisplay.text = CurrentWaterValue.ToString();
         foodValueDisplay.text = CurretFoodValue.ToString();
@@ -187,12 +197,12 @@ public class TownResourceBehaviour : MonoBehaviour
     public void AdjustHungerMeter(int value)
     {
         currentHungerValue += value;
-        if(currentHungerValue < 0)
+        SetHearts();
+        if (currentHungerValue < 0)
         {
             currentHungerValue = 0;
         }
         GameManager.Instance.WaveManager.ForceRun();
-        hungerMeter.fillAmount = (float)currentHungerValue / 3;
         if (TownResourceBehaviour.Instance.CurrentHungerValue <= 0)
         {
             GameManager.Instance.SetToLose();
@@ -262,7 +272,7 @@ public class TownResourceBehaviour : MonoBehaviour
     public void ResetHungerMeter()
     {
         currentHungerValue = 3;
-        hungerMeter.fillAmount = 1;
+        SetHearts();
     }
 
     public void SetTargetGoldValue(int value)
