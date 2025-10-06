@@ -900,6 +900,7 @@ MonoBehaviour:
   perfectUI: {fileID: 5456457471628352908}
   perfectUIBonusScoreText: {fileID: 3000193714939612487}
   perfectUITimeBonusScoreText: {fileID: 3000193714939612488}
+  perfectUIComboText: {fileID: 3000193714939612489}
   perfectRun: 0
 --- !u!4 &586554365
 Transform:
@@ -2073,6 +2074,17 @@ MonoBehaviour:
 --- !u!114 &3000193714939612488 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5286914833437355576, guid: 99e349b6b6265c74d943089a4b1339fd, type: 3}
+  m_PrefabInstance: {fileID: 3000193714939612486}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &3000193714939612489 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3152667731915162415, guid: 99e349b6b6265c74d943089a4b1339fd, type: 3}
   m_PrefabInstance: {fileID: 3000193714939612486}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

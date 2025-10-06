@@ -420,15 +420,16 @@ public class DeckManager
         npcPools.Enqueue(target);
     }
 
-
+    public static bool clearingList = false;
     public void ClearTrackingAndRepool()
     {
-        foreach(GameObject obj in trackedNPCs.Values)
+        clearingList = true;
+        foreach (GameObject obj in trackedNPCs.Values)
         {
             obj.SetActive(false);
             npcPools.Enqueue(obj);
         }
-
+        clearingList = false;
         trackedNPCs.Clear();
     }
 

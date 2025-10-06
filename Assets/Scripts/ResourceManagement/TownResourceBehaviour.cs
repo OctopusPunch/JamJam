@@ -155,6 +155,7 @@ public class TownResourceBehaviour : MonoBehaviour
     public void SetTargetWaterValue(int value)
     {
         targetWaterValue = value;
+        waterTargetDisplay.text = value.ToString();
     }
 
     public void AdjustWaterResource(int value)
@@ -177,6 +178,7 @@ public class TownResourceBehaviour : MonoBehaviour
     public void SetTargetFoodValue(int value)
     {
         targetFoodValue = value;
+        foodTargetDisplay.text = value.ToString();
     }
     public void AdjustFoodResource(int value)
     {
@@ -231,14 +233,12 @@ public class TownResourceBehaviour : MonoBehaviour
         {
             GameManager.Instance.SetToBust();
             TownResourceBehaviour.Instance.AdjustHungerMeter(-1);
-            Debug.Log("B");
             return;
         }
         if(currentGoldValue > targetGoldValue)
         {
             GameManager.Instance.SetToBust();
             TownResourceBehaviour.Instance.AdjustHungerMeter(-1);
-            Debug.Log("C");
             // fail
             return;
         }
@@ -246,12 +246,9 @@ public class TownResourceBehaviour : MonoBehaviour
         {
             GameManager.Instance.SetToBust();
             TownResourceBehaviour.Instance.AdjustHungerMeter(-1);
-            Debug.Log("D");
             // fail
             return;
         }
-
-        Debug.Log("F");
 
     }
 
@@ -278,6 +275,7 @@ public class TownResourceBehaviour : MonoBehaviour
     public void SetTargetGoldValue(int value)
     {
         targetGoldValue = value;
+        goldTargetDisplay.text = value.ToString();
     }
 
     public void AdjustGoldMeter(int value)

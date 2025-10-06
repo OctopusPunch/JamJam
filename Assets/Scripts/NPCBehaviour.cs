@@ -61,7 +61,8 @@ public class NPCBehaviour : MonoBehaviour
     {
         wasGodHanded = false;
         inFeedingRange = false;
-        GameManager.Instance.WaveManager.RemoveIfTracked(this.gameObject);
+        if (!DeckManager.clearingList)
+            GameManager.Instance.WaveManager.RemoveIfTracked(this.gameObject);
     }
 
     void Update()
