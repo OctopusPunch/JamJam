@@ -430,67 +430,21 @@ public class DeckManager
         trackedNPCs.Clear();
     }
 
-    public void CheckTrackedAllMatchTargets()
+    public void PerfectRun()
     {
-        int foodCount = 0;
-        int waterCount = 0;
-        int goldCount = 0;
-
-        foreach (GameObject obj in trackedNPCs.Values)
-        {
-            NPCAttributes att = obj.GetComponent<NPCBehaviour>().Attributes;
-            switch (att.resourceType1)
-            {
-                case NPCAttributes.ResourceType.Food:
-                    foodCount += att.resourceAmount1;
-                    break;
-                case NPCAttributes.ResourceType.Water:
-                    waterCount += att.resourceAmount1;
-                    break;
-                case NPCAttributes.ResourceType.Gold:
-                    goldCount += att.resourceAmount1;
-                    break;
-                default:
-                case NPCAttributes.ResourceType.None:
-                    break;
-            }
-            switch (att.resourceType2)
-            {
-                case NPCAttributes.ResourceType.Food:
-                    foodCount += att.resourceAmount2;
-                    break;
-                case NPCAttributes.ResourceType.Water:
-                    waterCount += att.resourceAmount2;
-                    break;
-                case NPCAttributes.ResourceType.Gold:
-                    goldCount += att.resourceAmount2;
-                    break;
-                default:
-                case NPCAttributes.ResourceType.None:
-                    break;
-            }
-        }
-
-        if (TownResourceBehaviour.Instance.CurrentWaterValue + waterCount != TownResourceBehaviour.Instance.TargetWaterValue)
-        {
-            return;
-        }
-
-        if (TownResourceBehaviour.Instance.CurrentGoldValue + goldCount != TownResourceBehaviour.Instance.TargetGoldValue)
-        {
-            return;
-        }
-
-        if (TownResourceBehaviour.Instance.CurretFoodValue + foodCount != TownResourceBehaviour.Instance.TargetFoodValue)
-        {
-            return;
-        }
-
         foreach (GameObject obj in trackedNPCs.Values)
         {
             obj.GetComponent<NPCBehaviour>().PerfectRun();
         }
         GameManager.Instance.perfectRun = true;
+    }
+
+    public void ForceRun()
+    {
+        foreach (GameObject obj in trackedNPCs.Values)
+        {
+            obj.GetComponent<NPCBehaviour>().PerfectRun();
+        }
     }
 
     public float GetSpeed()
