@@ -5,9 +5,6 @@ public class SimpleAnimationEnumerator : MonoBehaviour
     SpriteRenderer sr;
 
     [SerializeField] private Sprite[] frames;
-    [SerializeField] private bool playSound;
-    [SerializeField] private bool offsetSound = false;
-    [SerializeField] private string clipName;
     [SerializeField] private float fps = 10f;
 
     private Coroutine animationCoroutine;
@@ -30,11 +27,6 @@ public class SimpleAnimationEnumerator : MonoBehaviour
         for (int i = 0; i < frames.Length; i++)
         {
             sr.sprite = frames[i];
-
-            if (playSound && (offsetSound ? i % 2 == 1 : i % 2 == 0))
-            {
-                SoundManager.Instance.Play(clipName);
-            }
 
             yield return new WaitForSeconds(1f / fps);
         }

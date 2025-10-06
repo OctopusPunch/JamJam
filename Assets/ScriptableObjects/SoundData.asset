@@ -55,9 +55,9 @@ MonoBehaviour:
     pitchVariance: 0.185
   - name: Bell
     clip: {fileID: 8300000, guid: e3fbba4cc4718224695032cd910b47f8, type: 3}
-    loop: 1
+    loop: 0
     baseVolume: 1
-    pitchVariance: 0.05
+    pitchVariance: 0
   - name: Click1
     clip: {fileID: 8300000, guid: ea720b93e642f8a42ab9713a7be15e0f, type: 3}
     loop: 1
