@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Mono.Cecil;
 using UnityEngine;
 
 public class Item : MonoBehaviour
