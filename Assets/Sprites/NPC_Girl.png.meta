@@ -1,19 +1,13 @@
 fileFormatVersion: 2
 guid: 4eb4e269b13543440b98432d7fd7f7ea
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -3398479423036062016
-    second: NPC_Girl_0
-  - first:
-      213: -3190822974949898723
-    second: NPC_Girl_1
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
-    sRGBTexture: 0
+    sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -45,7 +39,7 @@ TextureImporter:
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -99,58 +93,6 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Switch
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -168,10 +110,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 0c6067d78fc26d0d0800000000000000
-      internalID: -3398479423036062016
+      spriteID: 687ae3ec01a7071428c3b4f970463d59
+      internalID: 1488091123
       vertices: []
       indices: 
       edges: []
@@ -190,10 +132,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: d16c4f4f86be7b3d0800000000000000
-      internalID: -3190822974949898723
+      spriteID: 51e87d5b058562148a4d5d2c9d3b6566
+      internalID: 233252856
       vertices: []
       indices: 
       edges: []
@@ -214,8 +156,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db50687860d14444cbe99bb8fdcaa136
-      internalID: -1278320452
+      spriteID: bf89531b82e72ff4a96b6d000e2c6fe1
+      internalID: -1126492899
       vertices: []
       indices: 
       edges: []
@@ -236,8 +178,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a791ec6effb719f44a6b9cc862e6652d
-      internalID: -177121969
+      spriteID: 03025603c23f48546837ba00505d9bf4
+      internalID: -163695577
       vertices: []
       indices: 
       edges: []
@@ -258,8 +200,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 94f4e64eafbd3df498d17fdc8d00b2f9
-      internalID: 2093759450
+      spriteID: 93184e0a178729b4c9d518a20f07ab1d
+      internalID: -1432380344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_Girl_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 794dcb56671cb734dbc549de95bdeb1d
+      internalID: -248531731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_Girl_6
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71efaf317cf4dc948ad68d9252af0e5d
+      internalID: -130860319
       vertices: []
       indices: 
       edges: []
@@ -268,7 +254,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: cf74d3742e4e78b4c8894607570a099e
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -280,11 +266,13 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      NPC_Girl_0: -3398479423036062016
-      NPC_Girl_1: -3190822974949898723
-      NPC_Girl_2: -1278320452
-      NPC_Girl_3: -177121969
-      NPC_Girl_4: 2093759450
+      NPC_Girl_0: 1488091123
+      NPC_Girl_1: 233252856
+      NPC_Girl_2: -1126492899
+      NPC_Girl_3: -163695577
+      NPC_Girl_4: -1432380344
+      NPC_Girl_5: -248531731
+      NPC_Girl_6: -130860319
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

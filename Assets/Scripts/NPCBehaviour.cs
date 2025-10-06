@@ -54,6 +54,7 @@ public class NPCBehaviour : MonoBehaviour
         isHeld = false;
         SetResource();
         HideResource();
+        GetComponent<SimpleSpriteAnimator>().SetAnimation("Walk");
     }
 
     private void OnDisable()
@@ -277,6 +278,7 @@ public class NPCBehaviour : MonoBehaviour
         SoundManager.Instance.Play("HeartBeat");
         EyeManager.Instance.SetTarget(transform);
         SetIsHeld(true);
+        GetComponent<SimpleSpriteAnimator>().SetAnimation("Wiggle"); 
         wasGodHanded = true;
     }
     private void OnMouseUp()
@@ -310,7 +312,7 @@ public class NPCBehaviour : MonoBehaviour
         EyeManager.Instance.ClearTarget();
 
         SetIsHeld(false);
-        
+        GetComponent<SimpleSpriteAnimator>().SetAnimation("Walk");
     }
 
     private void OnMouseDrag()
