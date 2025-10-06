@@ -7,6 +7,7 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] SoundDataSO soundData;
     [SerializeField] AudioSource oneShotSource;
+    [SerializeField] AudioSource stepSource;
 
     readonly Dictionary<string, AudioSource> activeSources = new();
 
@@ -56,6 +57,12 @@ public class SoundManager : MonoBehaviour
             {
                 oneShotSource = gameObject.AddComponent<AudioSource>();
                 oneShotSource.playOnAwake = false;
+            }
+
+            if(entry.name == "Step")
+            {
+                stepSource.PlayOneShot(entry.clip, entry.baseVolume);
+                return;
             }
 
             oneShotSource.pitch = pitch;

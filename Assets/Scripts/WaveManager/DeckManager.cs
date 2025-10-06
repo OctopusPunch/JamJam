@@ -62,6 +62,8 @@ public class DeckManager
         Shuffle(pulledSolution);
         SpawnWave(pulledSolution);
         pulledSolution.Clear();
+
+        SoundManager.Instance.Play("Bell");
         TownResourceBehaviour.Instance.bellringerAnimator.PlayAnimation();
     }
 
