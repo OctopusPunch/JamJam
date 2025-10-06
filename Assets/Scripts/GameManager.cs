@@ -69,6 +69,8 @@ public class GameManager : MonoBehaviour
     TextMeshProUGUI perfectUIBonusScoreText;
     [SerializeField]
     TextMeshProUGUI perfectUITimeBonusScoreText;
+    [SerializeField]
+    TextMeshProUGUI perfectUIComboText;
 
     // in game stuffs
     private float spawnSubWaveInSeconds;
@@ -617,6 +619,7 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator ShowPerfectUI()
     {
+        perfectUIComboText.text = "Chain: " + chainedPerfects;
         perfectUIBonusScoreText.text = "0";
         perfectUI.GetComponent<CanvasGroup>().alpha = 0;
         perfectUI.SetActive(true);
@@ -657,6 +660,11 @@ public class GameManager : MonoBehaviour
         perfectUI.GetComponent<CanvasGroup>().alpha = 0;
         perfectUI.SetActive(false);
 
+        int random = UnityEngine.Random.Range(5, 9);
+
+        TownResourceBehaviour.Instance.SetTargetFoodValue(random);
+        TownResourceBehaviour.Instance.SetTargetWaterValue(random);
+        TownResourceBehaviour.Instance.SetTargetGoldValue(random);
 
         state = GameState.In_Game;
         TownResourceBehaviour.Instance.ResetGoldMeter();
