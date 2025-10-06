@@ -56,13 +56,20 @@ public class NPCBehaviour : MonoBehaviour
         HideResource();
     }
 
+    private void OnDisable()
+    {
+        wasGodHanded = false;
+        inFeedingRange = false;
+        GameManager.Instance.WaveManager.RemoveIfTracked(this.gameObject);
+    }
+
     void Update()
     {
         if (GameManager.Instance == null)
         {
             return;
         }
-        if (GameManager.Instance.State != GameManager.GameState.In_Game)
+        if (GameManager.Instance.State != GameManager.GameState.In_Game && !perfectRunSpeed)
         {
             return;
         }
@@ -147,7 +154,7 @@ public class NPCBehaviour : MonoBehaviour
             item2.ThrowInArc();
         }
 
-        AdjustResources();
+        CollectResources();
 
         gameObject.SetActive(false);
         wasGodHanded = false;
@@ -166,15 +173,12 @@ public class NPCBehaviour : MonoBehaviour
         {
             case NPCAttributes.ResourceType.Food:
                 TownResourceBehaviour.Instance.AdjustFoodResource(attributes.resourceAmount1);
-                SoundManager.Instance.Play("Collect_Food");
                 break;
             case NPCAttributes.ResourceType.Water:
                 TownResourceBehaviour.Instance.AdjustWaterResource(attributes.resourceAmount1);
-                SoundManager.Instance.Play("Collect_Water");
                 break;
             case NPCAttributes.ResourceType.Gold:
                 TownResourceBehaviour.Instance.AdjustGoldMeter(attributes.resourceAmount1);
-                SoundManager.Instance.Play("Collect_Gold");
                 break;
             default:
             case NPCAttributes.ResourceType.None:
@@ -185,14 +189,45 @@ public class NPCBehaviour : MonoBehaviour
         {
             case NPCAttributes.ResourceType.Food:
                 TownResourceBehaviour.Instance.AdjustFoodResource(attributes.resourceAmount2);
-                SoundManager.Instance.Play("Collect_Food");
                 break;
             case NPCAttributes.ResourceType.Water:
                 TownResourceBehaviour.Instance.AdjustWaterResource(attributes.resourceAmount2);
-                SoundManager.Instance.Play("Collect_Water");
                 break;
             case NPCAttributes.ResourceType.Gold:
                 TownResourceBehaviour.Instance.AdjustGoldMeter(attributes.resourceAmount2);
+                break;
+            default:
+            case NPCAttributes.ResourceType.None:
+                break;
+        }
+    }
+    public void CollectResources()
+    {
+        switch (attributes.resourceType1)
+        {
+            case NPCAttributes.ResourceType.Food:
+                SoundManager.Instance.Play("Collect_Food");
+                break;
+            case NPCAttributes.ResourceType.Water:
+                SoundManager.Instance.Play("Collect_Water");
+                break;
+            case NPCAttributes.ResourceType.Gold:
+                SoundManager.Instance.Play("Collect_Gold");
+                break;
+            default:
+            case NPCAttributes.ResourceType.None:
+                break;
+        }
+
+        switch (attributes.resourceType2)
+        {
+            case NPCAttributes.ResourceType.Food:
+                SoundManager.Instance.Play("Collect_Food");
+                break;
+            case NPCAttributes.ResourceType.Water:
+                SoundManager.Instance.Play("Collect_Water");
+                break;
+            case NPCAttributes.ResourceType.Gold:
                 SoundManager.Instance.Play("Collect_Gold");
                 break;
             default:
@@ -258,8 +293,9 @@ public class NPCBehaviour : MonoBehaviour
             inFeedingRange = false;
             SoundManager.Instance.Play("Eat");
             EyeAnimationController.Instance.Eat();
+            AdjustResources();
             GameManager.Instance.WaveManager.RemoveIfTracked(this.gameObject);
-            GameManager.Instance.WaveManager.CheckTrackedAllMatchTargets();
+            TownResourceBehaviour.Instance.CheckWinOrFail();
         }
         else
         {
@@ -276,8 +312,6 @@ public class NPCBehaviour : MonoBehaviour
         SetIsHeld(false);
         
     }
-
-
 
     private void OnMouseDrag()
     {

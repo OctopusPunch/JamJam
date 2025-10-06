@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static GameManager;
 
 public class TownResourceBehaviour : MonoBehaviour
 {
@@ -190,7 +191,72 @@ public class TownResourceBehaviour : MonoBehaviour
         {
             currentHungerValue = 0;
         }
+        GameManager.Instance.WaveManager.ForceRun();
         hungerMeter.fillAmount = (float)currentHungerValue / 3;
+        if (TownResourceBehaviour.Instance.CurrentHungerValue <= 0)
+        {
+            GameManager.Instance.SetToLose();
+            return;
+        }
+        GameManager.Instance.WaveManager.ForceRun();
+        if (GameManager.Instance.State != GameState.Bust && GameManager.Instance.State != GameState.NotEnough)
+        {
+            GameManager.Instance.RunCheckScore();
+        }
+        else
+        {
+            GameManager.Instance.WaveManager.ReleaseNewWave();
+        }
+    }
+
+    public void CheckWinOrFail()
+    {
+        if(currentFoodValue == targetFoodValue && currentGoldValue == targetGoldValue && currentWaterValue == targetWaterValue)
+        {
+            GameManager.Instance.WaveManager.PerfectRun();
+            GameManager.Instance.RunCheckScore();
+            return;
+        }
+        if(currentFoodValue > targetFoodValue)
+        {
+            GameManager.Instance.SetToBust();
+            TownResourceBehaviour.Instance.AdjustHungerMeter(-1);
+            Debug.Log("B");
+            return;
+        }
+        if(currentGoldValue > targetGoldValue)
+        {
+            GameManager.Instance.SetToBust();
+            TownResourceBehaviour.Instance.AdjustHungerMeter(-1);
+            Debug.Log("C");
+            // fail
+            return;
+        }
+        if(currentWaterValue > targetWaterValue)
+        {
+            GameManager.Instance.SetToBust();
+            TownResourceBehaviour.Instance.AdjustHungerMeter(-1);
+            Debug.Log("D");
+            // fail
+            return;
+        }
+
+        Debug.Log("F");
+
+    }
+
+    public bool CheckWinNoBonus()
+    {
+
+        if (currentFoodValue >= targetFoodValue - 1 && currentFoodValue <= targetFoodValue &&
+            currentGoldValue >= targetGoldValue - 1 && currentGoldValue <= targetGoldValue &&
+            currentWaterValue >= targetWaterValue - 1 && currentWaterValue <= targetWaterValue)
+        {
+
+            GameManager.Instance.RunCheckScore();
+            return true;
+        }
+        return false;
     }
 
     public void ResetHungerMeter()
