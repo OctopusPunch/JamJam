@@ -508,7 +508,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoundManager
   soundData: {fileID: 11400000, guid: e1f8a83d9130ab14699bb1906d98cd54, type: 2}
   oneShotSource: {fileID: 538857711}
-  stepSource: {fileID: 0}
+  stepSource: {fileID: 538857713}
 --- !u!82 &538857713
 AudioSource:
   m_ObjectHideFlags: 0

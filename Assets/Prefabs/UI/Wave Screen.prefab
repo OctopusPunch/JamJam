@@ -140,8 +140,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Fill the cities needs and feed the excess to the monster, or he will lose
-    health.
+  m_text: 'To satisfy the Eye, you must sacrifice your citizens. Give the eye the
+    resources he demands, no more no less.
 
 
     Begin Your Sacrifice.'
