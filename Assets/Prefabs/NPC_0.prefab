@@ -5015,12 +5015,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 552
-  m_Sprite: {fileID: -3398479423036062016, guid: 4eb4e269b13543440b98432d7fd7f7ea, type: 3}
+  m_Sprite: {fileID: 1488091123, guid: 4eb4e269b13543440b98432d7fd7f7ea, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.75, y: 1}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -5064,15 +5064,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0d1154a9ac2ce742916258a078e892e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleSpriteAnimation
-  frames:
-  - {fileID: -3190822974949898723, guid: 4eb4e269b13543440b98432d7fd7f7ea, type: 3}
-  - {fileID: -1278320452, guid: 4eb4e269b13543440b98432d7fd7f7ea, type: 3}
-  - {fileID: -177121969, guid: 4eb4e269b13543440b98432d7fd7f7ea, type: 3}
-  - {fileID: 2093759450, guid: 4eb4e269b13543440b98432d7fd7f7ea, type: 3}
+  animations:
+  - name: Walk
+    frames:
+    - {fileID: 233252856, guid: 4eb4e269b13543440b98432d7fd7f7ea, type: 3}
+    - {fileID: -1126492899, guid: 4eb4e269b13543440b98432d7fd7f7ea, type: 3}
+    - {fileID: -163695577, guid: 4eb4e269b13543440b98432d7fd7f7ea, type: 3}
+    - {fileID: -1432380344, guid: 4eb4e269b13543440b98432d7fd7f7ea, type: 3}
+    fps: 10
+  - name: Wiggle
+    frames:
+    - {fileID: -248531731, guid: 4eb4e269b13543440b98432d7fd7f7ea, type: 3}
+    - {fileID: -130860319, guid: 4eb4e269b13543440b98432d7fd7f7ea, type: 3}
+    fps: 40
   playSound: 1
-  offsetSound: 0
   clipName: Step
-  fps: 5
   startDelayMax: 0.5
 --- !u!61 &7539710013426921285
 BoxCollider2D:
@@ -5113,7 +5119,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 0.75, y: 1}
+    newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
